@@ -786,6 +786,7 @@ function CoopsTab({ farm }: { farm: Farm }) {
   const [coops, setCoops] = useState<Coop[]>([]);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: '', capacity: '' });
 
   useEffect(() => {
@@ -807,32 +808,87 @@ function CoopsTab({ farm }: { farm: Farm }) {
     }
   };
 
+  const handleEditClick = (coop: Coop) => {
+    setEditingId(coop.id);
+    setFormData({ name: coop.name, capacity: coop.capacity.toString() });
+    setShowForm(true);
+  };
+
+  const handleDelete = async (coopId: string) => {
+    if (!confirm('Are you sure you want to delete this coop?')) return;
+    
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch(`/api/farm/coops/${coopId}`, {
+        method: 'DELETE',
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (response.ok) {
+        fetchCoops();
+      }
+    } catch (error) {
+      console.error('Error deleting coop:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/farm/coops', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          capacity: parseInt(formData.capacity),
-        }),
-      });
-      if (response.ok) {
-        setFormData({ name: '', capacity: '' });
-        setShowForm(false);
-        fetchCoops();
+      
+      if (editingId) {
+        // Update existing coop
+        const response = await fetch(`/api/farm/coops/${editingId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            capacity: parseInt(formData.capacity),
+          }),
+        });
+        if (response.ok) {
+          setFormData({ name: '', capacity: '' });
+          setEditingId(null);
+          setShowForm(false);
+          fetchCoops();
+        }
+      } else {
+        // Create new coop
+        const response = await fetch('/api/farm/coops', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            capacity: parseInt(formData.capacity),
+          }),
+        });
+        if (response.ok) {
+          setFormData({ name: '', capacity: '' });
+          setShowForm(false);
+          fetchCoops();
+        }
       }
     } catch (error) {
-      console.error('Error creating coop:', error);
+      console.error('Error saving coop:', error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleCancel = () => {
+    setFormData({ name: '', capacity: '' });
+    setEditingId(null);
+    setShowForm(false);
   };
 
   return (
@@ -840,8 +896,12 @@ function CoopsTab({ farm }: { farm: Farm }) {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Coops / Houses</h2>
         <button
-          onClick={() => setShowForm(!showForm)}
-          className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg"
+          onClick={() => {
+            setEditingId(null);
+            setFormData({ name: '', capacity: '' });
+            setShowForm(!showForm);
+          }}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
         >
           {showForm ? 'Cancel' : '+ Add Coop'}
         </button>
@@ -851,7 +911,7 @@ function CoopsTab({ farm }: { farm: Farm }) {
         <form onSubmit={handleSubmit} className="bg-white from-slate-50 to-slate-50 p-6 rounded-2xl mb-8 border border-slate-200 shadow-lg">
           <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
             <AddIcon size={24} className="text-slate-600" />
-            Add New Coop
+            {editingId ? 'Edit Coop' : 'Add New Coop'}
           </h3>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
             <div>
@@ -861,7 +921,7 @@ function CoopsTab({ farm }: { farm: Farm }) {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Enter coop name (e.g., Coop A)"
-                className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:border-slate-500 focus:ring-4 focus:ring-slate-100 transition-all"
+                className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
                 required
               />
             </div>
@@ -872,24 +932,33 @@ function CoopsTab({ farm }: { farm: Farm }) {
                 value={formData.capacity}
                 onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
                 placeholder="Enter bird capacity"
-                className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:border-slate-500 focus:ring-4 focus:ring-slate-100 transition-all"
+                className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 transition-all"
                 required
               />
             </div>
           </div>
-          <button
-            type="submit"
-            disabled={loading}
-            className="mt-6 bg-white from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
-          >
-            {loading ? 'Adding Coop...' : 'Create Coop'}
-          </button>
+          <div className="flex gap-3 mt-6">
+            <button
+              type="submit"
+              disabled={loading}
+              className="flex-1 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            >
+              {loading ? (editingId ? 'Updating...' : 'Creating...') : (editingId ? 'Update Coop' : 'Create Coop')}
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="px-6 py-3 border-2 border-slate-300 text-slate-700 rounded-xl font-semibold hover:bg-slate-50 transition-all"
+            >
+              Cancel
+            </button>
+          </div>
         </form>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {coops.map((coop) => (
-          <div key={coop.id} className="group relative bg-white from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-slate-300 transition-all duration-300 transform hover:-translate-y-1">
+          <div key={coop.id} className="group relative bg-white from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 transform hover:-translate-y-1">
             <div className="absolute top-4 right-4 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
               <CoopIcon size={24} className="text-slate-600" />
             </div>
@@ -903,11 +972,26 @@ function CoopsTab({ farm }: { farm: Farm }) {
               <div className="mt-4 pt-4 border-t border-slate-200">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-900 font-medium">Status:</span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 rounded-full font-semibold">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full font-semibold">
                     <CheckIcon size={14} />
                     Active
                   </span>
                 </div>
+              </div>
+              <div className="mt-4 flex gap-2">
+                <button
+                  onClick={() => handleEditClick(coop)}
+                  className="flex-1 px-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg font-semibold text-sm transition-all"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(coop.id)}
+                  disabled={loading}
+                  className="flex-1 px-3 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold text-sm transition-all disabled:opacity-50"
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>
