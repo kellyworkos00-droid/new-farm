@@ -594,9 +594,9 @@ function OverviewTab({ farm }: { farm: Farm }) {
               </div>
             </div>
             <p className="mb-1 text-sm font-medium text-slate-600">Today's Production</p>
-            <p className="mb-2 text-4xl font-bold text-slate-900">{analytics.todayEggs}</p>
+            <p className="mb-2 text-4xl font-bold text-slate-900">{analytics.todayEggs} <span className="text-lg text-slate-600">({Math.floor(analytics.todayEggs / 30)} crates)</span></p>
             <div className="flex items-center gap-2 text-sm text-slate-600">
-              <span>This week: {analytics.weekEggs} eggs</span>
+              <span>This week: {analytics.weekEggs} ({Math.floor(analytics.weekEggs / 30)} crates)</span>
             </div>
           </div>
         </div>
@@ -651,7 +651,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-slate-900 font-medium">Today</span>
-                <span className="font-bold text-slate-900">{analytics.todayEggs} eggs</span>
+                <span className="font-bold text-slate-900">{analytics.todayEggs} eggs ({Math.floor(analytics.todayEggs / 30)} crates)</span>
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
                 <div 
@@ -665,7 +665,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-slate-900 font-medium">This Week</span>
-                <span className="font-bold text-slate-900">{analytics.weekEggs} eggs</span>
+                <span className="font-bold text-slate-900">{analytics.weekEggs} eggs ({Math.floor(analytics.weekEggs / 30)} crates)</span>
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
                 <div 
@@ -679,7 +679,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-slate-900 font-medium">This Month</span>
-                <span className="font-bold text-slate-900">{analytics.monthEggs} eggs</span>
+                <span className="font-bold text-slate-900">{analytics.monthEggs} eggs ({Math.floor(analytics.monthEggs / 30)} crates)</span>
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
                 <div className="flex h-full w-full items-center justify-end rounded-full bg-slate-700 px-2 transition-all duration-500">
@@ -1056,7 +1056,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-900 mb-1">Quantity (eggs)</label>
+              <label className="block text-sm font-medium text-slate-900 mb-1">Quantity (eggs) - 30 per crate</label>
               <input
                 type="number"
                 value={formData.quantity}
@@ -1115,7 +1115,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
               <tr key={record.id}>
                 <td className="border p-2">{new Date(record.date).toLocaleDateString()}</td>
                 <td className="border p-2">{record.coop.name}</td>
-                <td className="border p-2 text-right">{record.quantity}</td>
+                <td className="border p-2 text-right font-semibold">{record.quantity} <span className="text-slate-600 font-normal">({Math.floor(record.quantity / 30)} crates)</span></td>
                 <td className="border p-2">{record.grade || '-'}</td>
                 <td className="border p-2">{record.notes || '-'}</td>
               </tr>
