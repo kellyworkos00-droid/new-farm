@@ -129,6 +129,16 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const router = useRouter();
 
+  const navItems = [
+    { id: 'overview', label: 'Overview', mobileLabel: 'Home', Icon: OverviewIcon },
+    { id: 'coops', label: 'Coops', mobileLabel: 'Coops', Icon: CoopIcon },
+    { id: 'egg-production', label: 'Egg Prod.', mobileLabel: 'Eggs', Icon: EggIcon },
+    { id: 'health', label: 'Health', mobileLabel: 'Health', Icon: HealthIcon },
+    { id: 'feed', label: 'Feed Mgmt.', mobileLabel: 'Feed', Icon: FeedIcon },
+    { id: 'medications', label: 'Meds', mobileLabel: 'Meds', Icon: MedicationIcon },
+    { id: 'financials', label: 'Finance', mobileLabel: 'Money', Icon: FinanceIcon },
+  ];
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     const userStr = localStorage.getItem('user');
@@ -176,7 +186,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 pb-28 sm:pt-24 sm:pb-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 pb-28 sm:pt-32 sm:pb-8">
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-emerald-500/20 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 shadow-2xl backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
@@ -198,10 +208,23 @@ export default function Dashboard() {
               </div>
             </div>
             
-            {/* User Welcome Section */}
-            <div className="text-right">
-              <p className="text-xs text-emerald-300/70 sm:text-sm uppercase tracking-wide font-medium">Welcome back</p>
-              <p className="text-sm font-bold text-emerald-100 sm:text-base truncate">{user?.name}</p>
+            {/* User Welcome + Profile Action */}
+            <div className="flex flex-col items-end gap-2 text-right">
+              <div>
+                <p className="text-xs text-emerald-300/70 sm:text-sm uppercase tracking-wide font-medium">Welcome back</p>
+                <p className="text-sm font-bold text-emerald-100 sm:text-base truncate">{user?.name}</p>
+              </div>
+              <button
+                onClick={() => setActiveTab('profile')}
+                className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all duration-300 sm:text-sm ${
+                  activeTab === 'profile'
+                    ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60'
+                    : 'border border-emerald-300/40 bg-emerald-900/30 text-emerald-100 hover:bg-emerald-900/50'
+                }`}
+              >
+                <ProfileIcon size={16} className={activeTab === 'profile' ? 'text-white' : 'text-emerald-200'} />
+                <span>Profile</span>
+              </button>
             </div>
           </div>
         </div>
@@ -233,16 +256,7 @@ export default function Dashboard() {
       {/* Floating Bottom Navigation */}
       <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl shadow-2xl shadow-emerald-900/80 rounded-3xl sm:hidden hover:shadow-emerald-900/100 transition-all duration-300">
         <div className="flex flex-wrap justify-center gap-1 px-2 py-3 sm:px-4 sm:py-3">
-          {[
-            { id: 'overview', label: 'Overview', Icon: OverviewIcon },
-            { id: 'profile', label: 'Profile', Icon: ProfileIcon },
-            { id: 'coops', label: 'Coops', Icon: CoopIcon },
-            { id: 'egg-production', label: 'Eggs', Icon: EggIcon },
-            { id: 'health', label: 'Health', Icon: HealthIcon },
-            { id: 'feed', label: 'Feed', Icon: FeedIcon },
-            { id: 'medications', label: 'Meds', Icon: MedicationIcon },
-            { id: 'financials', label: 'Finance', Icon: FinanceIcon },
-          ].map(({ id, label, Icon }) => (
+          {navItems.map(({ id, mobileLabel, Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
@@ -251,28 +265,19 @@ export default function Dashboard() {
                   ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60 scale-110'
                   : 'text-emerald-300/70 hover:text-emerald-200 hover:bg-emerald-900/50'
               }`}
-              title={label}
+              title={mobileLabel}
             >
               <Icon size={18} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
-              <span className="text-[9px] leading-none">{label}</span>
+              <span className="text-[9px] leading-none">{mobileLabel}</span>
             </button>
           ))}
         </div>
       </nav>
 
       {/* Desktop Top Navigation */}
-      <div className="hidden sm:flex fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-6xl border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-emerald-900/80 hover:shadow-emerald-900/100 transition-all duration-300">
+      <div className="hidden sm:flex fixed top-[108px] left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-6xl border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-emerald-900/80 hover:shadow-emerald-900/100 transition-all duration-300">
         <div className="flex flex-wrap justify-center gap-2 px-3 py-3 lg:px-6">
-          {[
-            { id: 'overview', label: 'Overview', Icon: OverviewIcon },
-            { id: 'profile', label: 'Profile', Icon: ProfileIcon },
-            { id: 'coops', label: 'Coops', Icon: CoopIcon },
-            { id: 'egg-production', label: 'Egg Prod.', Icon: EggIcon },
-            { id: 'health', label: 'Health', Icon: HealthIcon },
-            { id: 'feed', label: 'Feed Mgmt.', Icon: FeedIcon },
-            { id: 'medications', label: 'Meds', Icon: MedicationIcon },
-            { id: 'financials', label: 'Finance', Icon: FinanceIcon },
-          ].map(({ id, label, Icon }) => (
+          {navItems.map(({ id, label, Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
