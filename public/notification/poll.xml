@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Poultry Farm Manager - Updates</title>
+    <link>https://poultry-farm.com</link>
+    <description>Latest updates and notifications for Poultry Farm Manager</description>
+    <atom:link href="https://poultry-farm.com/notification/poll.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Mar 2026 00:00:00 GMT</lastBuildDate>
+    <item>
+      <title>Farm Records Updated</title>
+      <description>Your farm records have been synced successfully</description>
+      <link>https://poultry-farm.com/dashboard</link>
+      <pubDate>Mon, 03 Mar 2026 00:00:00 GMT</pubDate>
+    </item>
+  </channel>
+</rss>
