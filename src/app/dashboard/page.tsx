@@ -188,41 +188,44 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-white pb-28 sm:pt-32 sm:pb-8">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 shadow-lg backdrop-blur-xl">
+        {/* Top accent bar */}
+        <div className="h-1 w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500"></div>
+        
         <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
           <div className="flex items-center justify-between gap-3 sm:gap-4">
             {/* Logo and Title */}
             <div className="flex min-w-0 items-center gap-2 sm:gap-4">
-              <div className="shrink-0 rounded-xl border border-slate-200 bg-white p-2.5 shadow-sm transition-all duration-300 sm:p-3.5">
-                <CoopIcon className="text-slate-700" size={24} />
+              <div className="shrink-0 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-3.5">
+                <CoopIcon className="text-white" size={24} />
               </div>
               <div className="min-w-0">
-                <h1 className="truncate text-xl font-extrabold text-slate-900 sm:text-3xl">
+                <h1 className="truncate text-lg font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent sm:text-3xl">
                   Poultry Farm Manager
                 </h1>
                 {farm && (
-                  <p className="truncate text-xs font-semibold text-slate-600 sm:text-sm">
-                    Farm: {farm.name}
+                  <p className="truncate text-xs font-semibold text-slate-500 sm:text-sm">
+                    📍 {farm.name}
                   </p>
                 )}
               </div>
             </div>
             
             {/* User Welcome + Profile Action */}
-            <div className="flex flex-col items-end gap-2 text-right">
-              <div>
-                <p className="text-xs font-medium uppercase tracking-wide text-slate-500 sm:text-sm">Welcome back</p>
+            <div className="flex flex-col items-end gap-3 text-right">
+              <div className="rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 px-3 py-2 sm:px-4 sm:py-2.5">
+                <p className="text-xs font-medium uppercase tracking-widest text-slate-500 sm:text-xs">Welcome</p>
                 <p className="truncate text-sm font-bold text-slate-900 sm:text-base">{user?.name}</p>
               </div>
               <button
                 onClick={() => setActiveTab('profile')}
-                className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all duration-300 sm:text-sm ${
+                className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition-all duration-300 sm:text-sm ${
                   activeTab === 'profile'
-                    ? 'bg-slate-900 text-white shadow-md'
-                    : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg hover:shadow-xl'
+                    : 'border-2 border-slate-200 bg-white text-slate-700 hover:border-emerald-400 hover:bg-emerald-50'
                 }`}
               >
-                <ProfileIcon size={16} className={activeTab === 'profile' ? 'text-white' : 'text-slate-600'} />
+                <ProfileIcon size={18} className={activeTab === 'profile' ? 'text-white' : 'text-slate-600'} />
                 <span>Profile</span>
               </button>
             </div>
