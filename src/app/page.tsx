@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -59,10 +59,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-100 to-emerald-100 p-3 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-white p-3 sm:p-6 lg:p-8">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-6 sm:gap-8 lg:grid-cols-2">
-        <section className="hidden rounded-3xl border border-white/70 bg-white/70 p-10 shadow-2xl backdrop-blur lg:block">
-          <div className="mb-8 inline-flex rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-4 text-white shadow-lg">
+        <section className="hidden rounded-3xl border border-slate-200 bg-white p-10 shadow-sm lg:block">
+          <div className="mb-8 inline-flex rounded-2xl border border-slate-200 bg-white p-4 text-slate-800 shadow-sm">
             <CoopIcon size={34} />
           </div>
           <h1 className="text-4xl font-extrabold leading-tight text-slate-900">
@@ -84,50 +84,50 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="w-full rounded-3xl border border-slate-200 bg-white p-5 shadow-2xl sm:p-8">
-          <div className="mb-5 rounded-2xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-teal-50 p-4 lg:hidden">
-            <div className="mb-2 inline-flex rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2 text-white shadow">
-              <CoopIcon size={18} />
+        <section className="w-full rounded-3xl border border-slate-200 bg-white p-5 shadow-lg sm:p-8 sm:shadow-md">
+          <div className="mb-6 rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 p-5 lg:hidden">
+            <div className="mb-3 inline-flex rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 p-3 text-emerald-700 shadow-sm">
+              <CoopIcon size={20} />
             </div>
-            <p className="text-base font-bold text-slate-900">Poultry Farm Manager</p>
-            <p className="text-sm text-slate-700">Classy mobile dashboard for your daily farm operations</p>
+            <p className="mb-1 text-xl font-bold text-slate-900">Poultry Farm Manager</p>
+            <p className="text-sm font-medium text-slate-600">Your complete farm management solution</p>
           </div>
 
-          <div className="mb-6 flex items-center gap-3">
-            <span className="inline-flex rounded-xl bg-slate-100 p-2 text-slate-800">
-              <ProfileIcon size={22} />
+          <div className="mb-8 flex items-center gap-4 sm:mb-10">
+            <span className="inline-flex rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 p-3 text-emerald-700">
+              <ProfileIcon size={24} />
             </span>
             <div>
-              <h2 className="text-2xl font-bold text-slate-900">
-                {isLogin ? 'Welcome back' : 'Create your account'}
+              <h2 className="text-2xl font-bold text-slate-900 sm:text-3xl">
+                {isLogin ? 'Welcome back' : 'Join us'}
               </h2>
-              <p className="text-sm text-slate-700">
-                {isLogin ? 'Sign in to continue to your dashboard' : 'Start managing your farm records'}
+              <p className="mt-1 text-sm text-slate-600">
+                {isLogin ? 'Access your farm dashboard' : 'Start your farm journey'}
               </p>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           {!isLogin && (
             <div>
-              <label className="mb-1 block text-sm font-semibold text-slate-900">
-                Name
+              <label className="mb-2 block text-sm font-semibold text-slate-900">
+                Full Name
               </label>
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleInputChange}
-                placeholder="Your name"
-                className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+                placeholder="John Doe"
+                className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-slate-900 placeholder:text-slate-400 shadow-sm transition focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-100"
                 required
               />
             </div>
           )}
 
           <div>
-            <label className="mb-1 block text-sm font-semibold text-slate-900">
-              Email
+            <label className="mb-2 block text-sm font-semibold text-slate-900">
+              Email Address
             </label>
             <input
               type="email"
@@ -135,13 +135,13 @@ export default function Home() {
               value={formData.email}
               onChange={handleInputChange}
               placeholder="your@email.com"
-              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-slate-900 placeholder:text-slate-400 shadow-sm transition focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-100"
               required
             />
           </div>
 
           <div>
-            <label className="mb-1 block text-sm font-semibold text-slate-900">
+            <label className="mb-2 block text-sm font-semibold text-slate-900">
               Password
             </label>
             <input
@@ -149,14 +149,14 @@ export default function Home() {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              placeholder="Enter your password"
-              className="w-full rounded-xl border border-slate-300 px-4 py-3 text-slate-900 placeholder:text-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+              placeholder="••••••••"
+              className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-slate-900 placeholder:text-slate-400 shadow-sm transition focus:border-emerald-500 focus:outline-none focus:ring-4 focus:ring-emerald-100"
               required
             />
           </div>
 
           {error && (
-            <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm font-medium text-red-700">
+            <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-medium text-red-700">
               {error}
             </div>
           )}
@@ -164,13 +164,24 @@ export default function Home() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 py-3 font-semibold text-white shadow-lg transition hover:from-emerald-700 hover:to-teal-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="w-full rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 py-3.5 font-semibold text-white shadow-md transition duration-300 hover:from-emerald-700 hover:to-teal-700 hover:shadow-lg active:shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
           >
-            {loading ? 'Processing...' : isLogin ? 'Login' : 'Register'}
+            {loading ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></span>
+                Processing...
+              </span>
+            ) : isLogin ? 'Sign in' : 'Create Account'}
           </button>
         </form>
 
-          <div className="mt-6 border-t border-slate-200 pt-5 text-center">
+          <div className="mt-8 flex items-center gap-3 sm:mt-10">
+            <div className="flex-1 border-t border-slate-200"></div>
+            <p className="text-sm text-slate-600">or</p>
+            <div className="flex-1 border-t border-slate-200"></div>
+          </div>
+
+          <div className="mt-8 text-center">
           <p className="text-sm text-slate-700">
             {isLogin ? "Don't have an account? " : 'Already have an account? '}
             <button
@@ -179,9 +190,9 @@ export default function Home() {
                 setError('');
                 setFormData({ email: '', password: '', name: '' });
               }}
-              className="font-semibold text-emerald-700 hover:text-emerald-800"
+              className="font-semibold text-emerald-600 transition hover:text-emerald-700 hover:underline"
             >
-              {isLogin ? 'Register' : 'Login'}
+              {isLogin ? 'Sign up' : 'Sign in'}
             </button>
           </p>
         </div>
@@ -190,3 +201,5 @@ export default function Home() {
     </div>
   );
 }
+
+

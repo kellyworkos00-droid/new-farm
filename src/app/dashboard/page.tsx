@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -186,23 +186,23 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 pb-28 sm:pt-32 sm:pb-8">
+    <div className="min-h-screen bg-white pb-28 sm:pt-32 sm:pb-8">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-emerald-500/20 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 shadow-2xl backdrop-blur-xl">
+      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
           <div className="flex items-center justify-between gap-3 sm:gap-4">
             {/* Logo and Title */}
             <div className="flex min-w-0 items-center gap-2 sm:gap-4">
-              <div className="shrink-0 p-2.5 bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-600 rounded-xl shadow-2xl sm:p-3.5 hover:shadow-emerald-500/50 transition-all duration-300">
-                <CoopIcon className="text-white" size={24} />
+              <div className="shrink-0 rounded-xl border border-slate-200 bg-white p-2.5 shadow-sm transition-all duration-300 sm:p-3.5">
+                <CoopIcon className="text-slate-700" size={24} />
               </div>
               <div className="min-w-0">
-                <h1 className="truncate text-xl font-bold bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent sm:text-3xl font-extrabold">
+                <h1 className="truncate text-xl font-extrabold text-slate-900 sm:text-3xl">
                   Poultry Farm Manager
                 </h1>
                 {farm && (
-                  <p className="truncate text-xs text-emerald-200 sm:text-sm font-semibold">
-                    🚜 {farm.name}
+                  <p className="truncate text-xs font-semibold text-slate-600 sm:text-sm">
+                    Farm: {farm.name}
                   </p>
                 )}
               </div>
@@ -211,18 +211,18 @@ export default function Dashboard() {
             {/* User Welcome + Profile Action */}
             <div className="flex flex-col items-end gap-2 text-right">
               <div>
-                <p className="text-xs text-emerald-300/70 sm:text-sm uppercase tracking-wide font-medium">Welcome back</p>
-                <p className="text-sm font-bold text-emerald-100 sm:text-base truncate">{user?.name}</p>
+                <p className="text-xs font-medium uppercase tracking-wide text-slate-500 sm:text-sm">Welcome back</p>
+                <p className="truncate text-sm font-bold text-slate-900 sm:text-base">{user?.name}</p>
               </div>
               <button
                 onClick={() => setActiveTab('profile')}
                 className={`inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-bold transition-all duration-300 sm:text-sm ${
                   activeTab === 'profile'
-                    ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60'
-                    : 'border border-emerald-300/40 bg-emerald-900/30 text-emerald-100 hover:bg-emerald-900/50'
+                    ? 'bg-slate-900 text-white shadow-md'
+                    : 'border border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
                 }`}
               >
-                <ProfileIcon size={16} className={activeTab === 'profile' ? 'text-white' : 'text-emerald-200'} />
+                <ProfileIcon size={16} className={activeTab === 'profile' ? 'text-white' : 'text-slate-600'} />
                 <span>Profile</span>
               </button>
             </div>
@@ -233,13 +233,13 @@ export default function Dashboard() {
       {/* Main Content */}
       <main className="mx-auto max-w-7xl px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
         {!farm ? (
-          <div className="bg-gradient-to-br from-white to-slate-50 border border-slate-200/50 p-6 sm:p-10 rounded-2xl shadow-2xl">
+          <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:p-10">
             <p className="text-slate-900 text-center text-lg font-semibold">Loading farm information...</p>
           </div>
         ) : (
           <div>
             {/* Tab Content */}
-            <div className="rounded-2xl border border-slate-200/50 bg-gradient-to-br from-white via-slate-50 to-emerald-50/30 p-4 shadow-2xl sm:p-8 sm:rounded-3xl lg:p-10 backdrop-blur-sm">
+            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-3xl sm:p-8 lg:p-10">
               {activeTab === 'overview' && <OverviewTab farm={farm} />}
               {activeTab === 'profile' && <ProfileTab user={user} onLogout={handleLogout} />}
               {activeTab === 'coops' && <CoopsTab farm={farm} />}
@@ -254,7 +254,7 @@ export default function Dashboard() {
       </main>
 
       {/* Floating Bottom Navigation */}
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl shadow-2xl shadow-emerald-900/80 rounded-3xl sm:hidden hover:shadow-emerald-900/100 transition-all duration-300">
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg rounded-3xl border border-slate-200 bg-white/95 shadow-lg backdrop-blur-2xl transition-all duration-300">
         <div className="flex flex-wrap justify-center gap-1 px-2 py-3 sm:px-4 sm:py-3">
           {navItems.map(({ id, mobileLabel, Icon }) => (
             <button
@@ -262,12 +262,12 @@ export default function Dashboard() {
               onClick={() => setActiveTab(id)}
               className={`flex flex-col items-center gap-0.5 px-2 py-2 text-[11px] font-bold rounded-2xl transition-all duration-300 hover:scale-110 ${
                 activeTab === id
-                  ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60 scale-110'
-                  : 'text-emerald-300/70 hover:text-emerald-200 hover:bg-emerald-900/50'
+                  ? 'bg-slate-900 text-white shadow-md scale-110'
+                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100'
               }`}
               title={mobileLabel}
             >
-              <Icon size={18} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
+              <Icon size={18} className={activeTab === id ? 'text-white' : 'text-slate-500'} />
               <span className="text-[9px] leading-none">{mobileLabel}</span>
             </button>
           ))}
@@ -275,7 +275,7 @@ export default function Dashboard() {
       </nav>
 
       {/* Desktop Top Navigation */}
-      <div className="hidden sm:flex fixed top-[108px] left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-6xl border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-emerald-900/80 hover:shadow-emerald-900/100 transition-all duration-300">
+      <div className="fixed left-1/2 top-[108px] z-40 hidden w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 rounded-3xl border border-slate-200 bg-white/95 shadow-lg backdrop-blur-2xl transition-all duration-300 sm:flex">
         <div className="flex flex-wrap justify-center gap-2 px-3 py-3 lg:px-6">
           {navItems.map(({ id, label, Icon }) => (
             <button
@@ -283,11 +283,11 @@ export default function Dashboard() {
               onClick={() => setActiveTab(id)}
               className={`flex items-center gap-2 px-3 py-2.5 text-xs lg:text-sm font-bold whitespace-nowrap rounded-xl transition-all duration-300 hover:scale-105 ${
                 activeTab === id
-                  ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60'
-                  : 'text-emerald-300/70 hover:text-emerald-200 hover:bg-emerald-900/50'
+                  ? 'bg-slate-900 text-white shadow-md'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
               }`}
             >
-              <Icon size={18} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
+              <Icon size={18} className={activeTab === id ? 'text-white' : 'text-slate-500'} />
               <span>{label}</span>
             </button>
           ))}
@@ -356,23 +356,23 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
   
   return (
     <div>
-      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Profile & Farm Settings</h2>
+      <h2 className="mb-6 text-2xl font-bold text-slate-900 sm:mb-8 sm:text-3xl">Profile & Farm Settings</h2>
       
       {/* User Information */}
-      <div className="bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 rounded-2xl border border-emerald-200/50 shadow-lg p-6 sm:p-8 mb-6 sm:mb-8 hover:shadow-xl transition-all duration-300 hover:border-emerald-300/70">
+      <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 sm:mb-8 sm:p-8">
         <div className="flex items-center gap-4 mb-6">
-          <div className="p-3 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl shadow-lg">
-            <ProfileIcon className="text-white" size={24} />
+          <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+            <ProfileIcon className="text-slate-700" size={24} />
           </div>
           <h3 className="font-bold text-xl text-slate-900">User Information</h3>
         </div>
         <div className="space-y-4">
-          <div className="bg-white/60 backdrop-blur rounded-lg p-4 border border-emerald-100/50">
-            <label className="text-xs sm:text-sm font-bold text-emerald-700 uppercase tracking-wide">Full Name</label>
+          <div className="rounded-lg border border-slate-200 bg-white p-4">
+            <label className="text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wide">Full Name</label>
             <p className="text-lg sm:text-xl font-bold text-slate-900 mt-1">{user.name}</p>
           </div>
-          <div className="bg-white/60 backdrop-blur rounded-lg p-4 border border-emerald-100/50">
-            <label className="text-xs sm:text-sm font-bold text-emerald-700 uppercase tracking-wide">Email Address</label>
+          <div className="rounded-lg border border-slate-200 bg-white p-4">
+            <label className="text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wide">Email Address</label>
             <p className="text-lg sm:text-xl font-bold text-slate-900 break-all mt-1">{user.email}</p>
           </div>
         </div>
@@ -380,11 +380,11 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
 
       {/* Farm Information */}
       {farm && (
-        <div className="bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 rounded-2xl border border-blue-200/50 shadow-lg p-6 sm:p-8 mb-6 sm:mb-8 hover:shadow-xl transition-all duration-300 hover:border-blue-300/70">
+        <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 sm:mb-8 sm:p-8">
           <div className="flex items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-4">
-              <div className="p-3 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl shadow-lg">
-                <CoopIcon className="text-white" size={24} />
+              <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
+                <CoopIcon className="text-slate-700" size={24} />
               </div>
               <h3 className="font-bold text-xl text-slate-900">Farm Details</h3>
             </div>
@@ -395,9 +395,9 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
                   setFormData({ name: farm.name, location: farm.location });
                 }
               }}
-              className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm"
+              className="rounded-lg bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-slate-800"
             >
-              {isEditing ? 'Cancel' : '✎ Edit'}
+              {isEditing ? 'Cancel' : 'âœŽ Edit'}
             </button>
           </div>
 
@@ -405,44 +405,44 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
             <form onSubmit={handleUpdateFarm} className="space-y-5">
               <div>
                 <label className="block text-sm font-bold text-slate-900 mb-2 uppercase tracking-wide">
-                  🚜 Farm Name
+                  ðŸšœ Farm Name
                 </label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-900 font-semibold background transition-all duration-200"
+                  className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 font-semibold text-slate-900 transition-all duration-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
                   required
                 />
               </div>
               <div>
                 <label className="block text-sm font-bold text-slate-900 mb-2 uppercase tracking-wide">
-                  📍 Location
+                  ðŸ“ Location
                 </label>
                 <input
                   type="text"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-900 font-semibold transition-all duration-200"
+                  className="w-full rounded-xl border-2 border-slate-200 bg-white px-4 py-3 font-semibold text-slate-900 transition-all duration-200 focus:border-slate-400 focus:ring-2 focus:ring-slate-200"
                   required
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 uppercase tracking-wide"
+                className="w-full rounded-xl bg-slate-900 px-6 py-3 font-bold uppercase tracking-wide text-white shadow-sm transition-all duration-200 hover:bg-slate-800 disabled:opacity-50"
               >
-                {loading ? 'Saving...' : '✓ Save Changes'}
+                {loading ? 'Saving...' : 'âœ“ Save Changes'}
               </button>
             </form>
           ) : (
             <div className="space-y-4">
-              <div className="bg-white/60 backdrop-blur rounded-lg p-4 border border-blue-100/50">
-                <label className="text-xs sm:text-sm font-bold text-blue-700 uppercase tracking-wide">🚜 Farm Name</label>
+              <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <label className="text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wide">ðŸšœ Farm Name</label>
                 <p className="text-lg sm:text-xl font-bold text-slate-900 mt-1">{farm.name}</p>
               </div>
-              <div className="bg-white/60 backdrop-blur rounded-lg p-4 border border-blue-100/50">
-                <label className="text-xs sm:text-sm font-bold text-blue-700 uppercase tracking-wide">📍 Location</label>
+              <div className="rounded-lg border border-slate-200 bg-white p-4">
+                <label className="text-xs sm:text-sm font-bold text-slate-700 uppercase tracking-wide">ðŸ“ Location</label>
                 <p className="text-lg sm:text-xl font-bold text-slate-900 mt-1">{farm.location}</p>
               </div>
             </div>
@@ -451,13 +451,13 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
       )}
 
       {/* Security Section */}
-      <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200/50 shadow-lg p-6 mb-6 sm:mb-8">
+      <div className="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm sm:mb-8">
         <div className="flex gap-3">
-          <div className="p-2 bg-amber-400 rounded-lg h-fit">
-            <AlertIcon className="text-white" size={20} />
+          <div className="h-fit rounded-lg border border-slate-200 bg-white p-2">
+            <AlertIcon className="text-slate-700" size={20} />
           </div>
           <div>
-            <p className="text-sm sm:text-base text-amber-900 font-semibold">
+            <p className="text-sm font-semibold text-slate-700 sm:text-base">
               <strong>Security Note:</strong> This application is designed for single-user farm management. Your login provides complete access to all farm records. Keep your credentials secure.
             </p>
           </div>
@@ -468,7 +468,7 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
       <div className="flex flex-col gap-4">
         <button
           onClick={onLogout}
-          className="flex items-center justify-center gap-3 w-full bg-gradient-to-r from-red-500 via-red-600 to-rose-600 hover:from-red-600 hover:via-red-700 hover:to-rose-700 text-white px-6 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-200 uppercase tracking-wide text-lg"
+          className="flex w-full items-center justify-center gap-3 rounded-xl bg-slate-900 px-6 py-4 text-lg font-bold uppercase tracking-wide text-white shadow-sm transition-all duration-200 hover:bg-slate-800"
         >
           <LogoutIcon size={22} />
           <span>Logout from Farm</span>
@@ -564,17 +564,17 @@ function OverviewTab({ farm }: { farm: Farm }) {
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {/* Active Coops Card */}
-        <div className="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
           <div className="relative">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                <CoopIcon size={24} className="text-white" />
+              <div className="rounded-xl bg-slate-100 p-3">
+                <CoopIcon size={24} className="text-slate-700" />
               </div>
             </div>
-            <p className="text-white/80 text-sm font-medium mb-1">Active Coops</p>
-            <p className="text-4xl font-bold text-white mb-2">{analytics.totalCoops}</p>
-            <div className="flex items-center gap-2 text-white/90 text-sm">
+            <p className="mb-1 text-sm font-medium text-slate-600">Active Coops</p>
+            <p className="mb-2 text-4xl font-bold text-slate-900">{analytics.totalCoops}</p>
+            <div className="flex items-center gap-2 text-sm text-slate-600">
               <CapacityIcon size={16} />
               <span>Capacity: {analytics.totalCapacity} birds</span>
             </div>
@@ -582,51 +582,51 @@ function OverviewTab({ farm }: { farm: Farm }) {
         </div>
 
         {/* Today's Eggs Card */}
-        <div className="group relative overflow-hidden bg-gradient-to-br from-amber-500 to-orange-600 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
           <div className="relative">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                <EggIcon size={24} className="text-white" />
+              <div className="rounded-xl bg-slate-100 p-3">
+                <EggIcon size={24} className="text-slate-700" />
               </div>
             </div>
-            <p className="text-white/80 text-sm font-medium mb-1">Today's Production</p>
-            <p className="text-4xl font-bold text-white mb-2">{analytics.todayEggs}</p>
-            <div className="flex items-center gap-2 text-white/90 text-sm">
+            <p className="mb-1 text-sm font-medium text-slate-600">Today's Production</p>
+            <p className="mb-2 text-4xl font-bold text-slate-900">{analytics.todayEggs}</p>
+            <div className="flex items-center gap-2 text-sm text-slate-600">
               <span>This week: {analytics.weekEggs} eggs</span>
             </div>
           </div>
         </div>
 
         {/* Net Profit Card */}
-        <div className="group relative overflow-hidden bg-gradient-to-br from-emerald-500 to-teal-600 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
           <div className="relative">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                <FinanceIcon size={24} className="text-white" />
+              <div className="rounded-xl bg-slate-100 p-3">
+                <FinanceIcon size={24} className="text-slate-700" />
               </div>
             </div>
-            <p className="text-white/80 text-sm font-medium mb-1">Net Profit</p>
-            <p className="text-4xl font-bold text-white mb-2">${analytics.netProfit.toFixed(2)}</p>
-            <div className="flex items-center gap-2 text-white/90 text-sm">
+            <p className="mb-1 text-sm font-medium text-slate-600">Net Profit</p>
+            <p className="mb-2 text-4xl font-bold text-slate-900">${analytics.netProfit.toFixed(2)}</p>
+            <div className="flex items-center gap-2 text-sm text-slate-600">
               <span>Income: ${analytics.totalIncome.toFixed(2)}</span>
             </div>
           </div>
         </div>
 
         {/* Health Alerts Card */}
-        <div className="group relative overflow-hidden bg-gradient-to-br from-red-500 to-rose-600 p-6 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
           <div className="relative">
             <div className="flex items-center justify-between mb-3">
-              <div className="p-3 bg-white/20 backdrop-blur-sm rounded-xl">
-                <HealthIcon size={24} className="text-white" />
+              <div className="rounded-xl bg-slate-100 p-3">
+                <HealthIcon size={24} className="text-slate-700" />
               </div>
             </div>
-            <p className="text-white/80 text-sm font-medium mb-1">Health Incidents</p>
-            <p className="text-4xl font-bold text-white mb-2">{analytics.healthIncidents}</p>
-            <div className="flex items-center gap-2 text-white/90 text-sm">
+            <p className="mb-1 text-sm font-medium text-slate-600">Health Incidents</p>
+            <p className="mb-2 text-4xl font-bold text-slate-900">{analytics.healthIncidents}</p>
+            <div className="flex items-center gap-2 text-sm text-slate-600">
               <AlertIcon size={16} />
               <span>Last 30 days</span>
             </div>
@@ -639,8 +639,8 @@ function OverviewTab({ farm }: { farm: Farm }) {
         {/* Egg Production Trend */}
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-lg">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-amber-100 rounded-xl">
-              <TrendUpIcon size={24} className="text-amber-600" />
+            <div className="p-2 bg-slate-100 rounded-xl">
+              <TrendUpIcon size={24} className="text-slate-600" />
             </div>
             <h3 className="font-bold text-xl text-slate-900">Egg Production Trend</h3>
           </div>
@@ -652,7 +652,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
                 <div 
-                  className="bg-gradient-to-r from-amber-400 to-amber-500 h-full rounded-full transition-all duration-500 flex items-center justify-end px-2"
+                  className="flex h-full items-center justify-end rounded-full bg-slate-500 px-2 transition-all duration-500"
                   style={{ width: `${Math.min((analytics.todayEggs / Math.max(analytics.weekEggs, 1)) * 100, 100)}%` }}
                 >
                   <span className="text-white text-xs font-bold">{analytics.todayEggs > 0 ? Math.round((analytics.todayEggs / Math.max(analytics.weekEggs, 1)) * 100) + '%' : ''}</span>
@@ -666,7 +666,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
                 <div 
-                  className="bg-gradient-to-r from-amber-500 to-amber-600 h-full rounded-full transition-all duration-500 flex items-center justify-end px-2"
+                  className="flex h-full items-center justify-end rounded-full bg-slate-600 px-2 transition-all duration-500"
                   style={{ width: `${Math.min((analytics.weekEggs / Math.max(analytics.monthEggs, 1)) * 100, 100)}%` }}
                 >
                   <span className="text-white text-xs font-bold">{analytics.weekEggs > 0 ? Math.round((analytics.weekEggs / Math.max(analytics.monthEggs, 1)) * 100) + '%' : ''}</span>
@@ -679,7 +679,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
                 <span className="font-bold text-slate-900">{analytics.monthEggs} eggs</span>
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
-                <div className="bg-gradient-to-r from-amber-600 to-orange-600 h-full rounded-full w-full transition-all duration-500 flex items-center justify-end px-2">
+                <div className="flex h-full w-full items-center justify-end rounded-full bg-slate-700 px-2 transition-all duration-500">
                   <span className="text-white text-xs font-bold">100%</span>
                 </div>
               </div>
@@ -697,39 +697,39 @@ function OverviewTab({ farm }: { farm: Farm }) {
         {/* Financial Summary */}
         <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-lg">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-2 bg-emerald-100 rounded-xl">
-              <FinanceIcon size={24} className="text-emerald-600" />
+            <div className="p-2 bg-slate-100 rounded-xl">
+              <FinanceIcon size={24} className="text-slate-600" />
             </div>
             <h3 className="font-bold text-xl text-slate-900">Financial Summary</h3>
           </div>
           <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl border border-emerald-200">
+            <div className="flex items-center justify-between p-4 bg-white from-slate-50 to-slate-50 rounded-xl border border-slate-200">
               <div>
                 <p className="text-sm font-medium text-slate-900 mb-1">Total Income</p>
-                <p className="text-2xl font-bold text-emerald-600">${analytics.totalIncome.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-slate-600">${analytics.totalIncome.toFixed(2)}</p>
               </div>
-              <div className="p-3 bg-emerald-100 rounded-xl">
-                <TrendUpIcon size={24} className="text-emerald-600" />
+              <div className="p-3 bg-slate-100 rounded-xl">
+                <TrendUpIcon size={24} className="text-slate-600" />
               </div>
             </div>
-            <div className="flex items-center justify-between p-4 bg-gradient-to-r from-red-50 to-rose-50 rounded-xl border border-red-200">
+            <div className="flex items-center justify-between p-4 bg-white from-slate-50 to-slate-50 rounded-xl border border-slate-200">
               <div>
                 <p className="text-sm font-medium text-slate-900 mb-1">Total Expenses</p>
-                <p className="text-2xl font-bold text-red-600">${analytics.totalExpenses.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-slate-600">${analytics.totalExpenses.toFixed(2)}</p>
               </div>
-              <div className="p-3 bg-red-100 rounded-xl">
-                <FinanceIcon size={24} className="text-red-600" />
+              <div className="p-3 bg-slate-100 rounded-xl">
+                <FinanceIcon size={24} className="text-slate-600" />
               </div>
             </div>
-            <div className="flex items-center justify-between p-5 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl border-2 border-blue-300 shadow-md">
+            <div className="flex items-center justify-between p-5 bg-white from-slate-50 to-slate-50 rounded-xl border-2 border-slate-300 shadow-md">
               <div>
                 <p className="text-sm font-semibold text-slate-900 mb-1">Net Profit</p>
-                <p className={`text-3xl font-bold ${analytics.netProfit >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+                <p className={`text-3xl font-bold ${analytics.netProfit >= 0 ? 'text-slate-600' : 'text-slate-600'}`}>
                   ${analytics.netProfit.toFixed(2)}
                 </p>
               </div>
-              <div className={`p-3 rounded-xl ${analytics.netProfit >= 0 ? 'bg-emerald-100' : 'bg-red-100'}`}>
-                <CheckIcon size={28} className={analytics.netProfit >= 0 ? 'text-emerald-600' : 'text-red-600'} />
+              <div className={`p-3 rounded-xl ${analytics.netProfit >= 0 ? 'bg-slate-100' : 'bg-slate-100'}`}>
+                <CheckIcon size={28} className={analytics.netProfit >= 0 ? 'text-slate-600' : 'text-slate-600'} />
               </div>
             </div>
           </div>
@@ -737,7 +737,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div className="mt-6 pt-6 border-t border-slate-200">
               <div className="flex items-center justify-between">
                 <span className="text-slate-900 font-medium">Profit Margin</span>
-                <span className={`text-2xl font-bold ${analytics.netProfit >= 0 ? 'text-emerald-600' : 'text-red-600'}`}>
+                <span className={`text-2xl font-bold ${analytics.netProfit >= 0 ? 'text-slate-600' : 'text-slate-600'}`}>
                   {((analytics.netProfit / analytics.totalIncome) * 100).toFixed(1)}%
                 </span>
               </div>
@@ -747,10 +747,10 @@ function OverviewTab({ farm }: { farm: Farm }) {
       </div>
 
       {/* Farm Info */}
-      <div className="bg-gradient-to-r from-slate-50 via-blue-50 to-slate-50 border border-slate-200 rounded-2xl p-6 shadow-lg">
+      <div className="bg-white from-slate-50 via-slate-50 to-slate-50 border border-slate-200 rounded-2xl p-6 shadow-lg">
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-blue-100 rounded-xl">
-            <CoopIcon size={24} className="text-blue-600" />
+          <div className="p-2 bg-slate-100 rounded-xl">
+            <CoopIcon size={24} className="text-slate-600" />
           </div>
           <h3 className="font-bold text-xl text-slate-900">Farm Information</h3>
         </div>
@@ -768,7 +768,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
           </div>
           <div className="bg-white p-4 rounded-xl shadow-sm">
             <p className="text-sm text-slate-700 mb-2 font-medium">Status</p>
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-emerald-100 text-emerald-700 border border-emerald-200">
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold bg-slate-100 text-slate-700 border border-slate-200">
               <CheckIcon size={16} />
               <span>Active & Operational</span>
             </span>
@@ -838,16 +838,16 @@ function CoopsTab({ farm }: { farm: Farm }) {
         <h2 className="text-2xl font-bold">Coops / Houses</h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg"
         >
           {showForm ? 'Cancel' : '+ Add Coop'}
         </button>
       </div>
 
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl mb-8 border border-blue-200 shadow-lg">
+        <form onSubmit={handleSubmit} className="bg-white from-slate-50 to-slate-50 p-6 rounded-2xl mb-8 border border-slate-200 shadow-lg">
           <h3 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
-            <AddIcon size={24} className="text-blue-600" />
+            <AddIcon size={24} className="text-slate-600" />
             Add New Coop
           </h3>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6">
@@ -858,7 +858,7 @@ function CoopsTab({ farm }: { farm: Farm }) {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 placeholder="Enter coop name (e.g., Coop A)"
-                className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:border-slate-500 focus:ring-4 focus:ring-slate-100 transition-all"
                 required
               />
             </div>
@@ -869,7 +869,7 @@ function CoopsTab({ farm }: { farm: Farm }) {
                 value={formData.capacity}
                 onChange={(e) => setFormData({ ...formData, capacity: e.target.value })}
                 placeholder="Enter bird capacity"
-                className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition-all"
+                className="w-full px-4 py-3 border-2 border-slate-300 rounded-xl focus:border-slate-500 focus:ring-4 focus:ring-slate-100 transition-all"
                 required
               />
             </div>
@@ -877,7 +877,7 @@ function CoopsTab({ farm }: { farm: Farm }) {
           <button
             type="submit"
             disabled={loading}
-            className="mt-6 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+            className="mt-6 bg-white from-slate-500 to-slate-600 hover:from-slate-600 hover:to-slate-700 text-white px-8 py-3 rounded-xl font-semibold shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
           >
             {loading ? 'Adding Coop...' : 'Create Coop'}
           </button>
@@ -886,9 +886,9 @@ function CoopsTab({ farm }: { farm: Farm }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {coops.map((coop) => (
-          <div key={coop.id} className="group relative bg-gradient-to-br from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-blue-300 transition-all duration-300 transform hover:-translate-y-1">
-            <div className="absolute top-4 right-4 w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-              <CoopIcon size={24} className="text-blue-600" />
+          <div key={coop.id} className="group relative bg-white from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-slate-300 transition-all duration-300 transform hover:-translate-y-1">
+            <div className="absolute top-4 right-4 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
+              <CoopIcon size={24} className="text-slate-600" />
             </div>
             <div className="pr-14">
               <h3 className="font-bold text-2xl text-slate-900 mb-3">{coop.name}</h3>
@@ -900,7 +900,7 @@ function CoopsTab({ farm }: { farm: Farm }) {
               <div className="mt-4 pt-4 border-t border-slate-200">
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-slate-900 font-medium">Status:</span>
-                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-700 rounded-full font-semibold">
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 text-slate-700 rounded-full font-semibold">
                     <CheckIcon size={14} />
                     Active
                   </span>
@@ -910,7 +910,7 @@ function CoopsTab({ farm }: { farm: Farm }) {
           </div>
         ))}
         {coops.length === 0 && (
-          <div className="col-span-full text-center py-16 bg-gradient-to-br from-slate-50 to-blue-50 rounded-2xl border-2 border-dashed border-slate-300">
+          <div className="col-span-full text-center py-16 bg-white from-slate-50 to-slate-50 rounded-2xl border-2 border-dashed border-slate-300">
             <div className="inline-flex p-4 bg-white rounded-full shadow-lg mb-4">
               <CoopIcon size={48} className="text-slate-700" />
             </div>
@@ -1017,7 +1017,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
         <h2 className="text-2xl font-bold">Egg Production Records</h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg"
         >
           {showForm ? 'Cancel' : '+ Add Record'}
         </button>
@@ -1089,7 +1089,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+            className="mt-4 bg-slate-600 hover:bg-slate-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
           >
             {loading ? 'Adding...' : 'Add Record'}
           </button>
@@ -1218,7 +1218,7 @@ function HealthTab({ farm }: { farm: Farm }) {
         <h2 className="text-2xl font-bold">Health Records</h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg"
         >
           {showForm ? 'Cancel' : '+ Add Record'}
         </button>
@@ -1292,7 +1292,7 @@ function HealthTab({ farm }: { farm: Farm }) {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+            className="mt-4 bg-slate-600 hover:bg-slate-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
           >
             {loading ? 'Adding...' : 'Add Record'}
           </button>
@@ -1317,10 +1317,10 @@ function HealthTab({ farm }: { farm: Farm }) {
                 <td className="border p-2">{record.coop.name}</td>
                 <td className="border p-2">
                   <span className={`px-2 py-1 rounded text-sm ${
-                    record.type === 'mortality' ? 'bg-red-100 text-red-800' :
-                    record.type === 'illness' ? 'bg-orange-100 text-orange-800' :
-                    record.type === 'vaccination' ? 'bg-green-100 text-green-800' :
-                    'bg-blue-100 text-blue-800'
+                    record.type === 'mortality' ? 'bg-slate-100 text-slate-800' :
+                    record.type === 'illness' ? 'bg-slate-100 text-slate-800' :
+                    record.type === 'vaccination' ? 'bg-slate-100 text-slate-800' :
+                    'bg-slate-100 text-slate-800'
                   }`}>
                     {record.type}
                   </span>
@@ -1433,7 +1433,7 @@ function FeedTab({ farm }: { farm: Farm }) {
         <h2 className="text-2xl font-bold">Feed Management</h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg"
         >
           {showForm ? 'Cancel' : '+ Add Record'}
         </button>
@@ -1515,7 +1515,7 @@ function FeedTab({ farm }: { farm: Farm }) {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+            className="mt-4 bg-slate-600 hover:bg-slate-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
           >
             {loading ? 'Adding...' : 'Add Record'}
           </button>
@@ -1632,7 +1632,7 @@ function MedicationsTab({ farm }: { farm: Farm }) {
         <h2 className="text-2xl font-bold">Medications & Vaccinations</h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg"
         >
           {showForm ? 'Cancel' : '+ Add Record'}
         </button>
@@ -1710,7 +1710,7 @@ function MedicationsTab({ farm }: { farm: Farm }) {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+            className="mt-4 bg-slate-600 hover:bg-slate-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
           >
             {loading ? 'Adding...' : 'Add Record'}
           </button>
@@ -1735,9 +1735,9 @@ function MedicationsTab({ farm }: { farm: Farm }) {
                 <td className="border p-2">{new Date(record.date).toLocaleDateString()}</td>
                 <td className="border p-2">
                   <span className={`px-2 py-1 rounded text-sm ${
-                    record.type === 'vaccination' ? 'bg-blue-100 text-blue-800' :
+                    record.type === 'vaccination' ? 'bg-slate-100 text-slate-800' :
                     record.type === 'medicine' ? 'bg-purple-100 text-purple-800' :
-                    'bg-green-100 text-green-800'
+                    'bg-slate-100 text-slate-800'
                   }`}>
                     {record.type}
                   </span>
@@ -1836,24 +1836,24 @@ function FinancialsTab({ farm }: { farm: Farm }) {
         <h2 className="text-2xl font-bold">Financial Records</h2>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg"
+          className="bg-slate-600 hover:bg-slate-700 text-white px-4 py-2 rounded-lg"
         >
           {showForm ? 'Cancel' : '+ Add Record'}
         </button>
       </div>
 
       <div className="grid grid-cols-3 gap-4 mb-6">
-        <div className="bg-green-50 p-4 rounded-lg">
-          <h3 className="text-sm font-medium text-green-900 mb-1">Total Income</h3>
-          <p className="text-2xl font-bold text-green-700">${totalIncome.toFixed(2)}</p>
+        <div className="bg-slate-50 p-4 rounded-lg">
+          <h3 className="text-sm font-medium text-slate-900 mb-1">Total Income</h3>
+          <p className="text-2xl font-bold text-slate-700">${totalIncome.toFixed(2)}</p>
         </div>
-        <div className="bg-red-50 p-4 rounded-lg">
-          <h3 className="text-sm font-medium text-red-900 mb-1">Total Expenses</h3>
-          <p className="text-2xl font-bold text-red-700">${totalExpense.toFixed(2)}</p>
+        <div className="bg-slate-50 p-4 rounded-lg">
+          <h3 className="text-sm font-medium text-slate-900 mb-1">Total Expenses</h3>
+          <p className="text-2xl font-bold text-slate-700">${totalExpense.toFixed(2)}</p>
         </div>
-        <div className={`${netProfit >= 0 ? 'bg-blue-50' : 'bg-orange-50'} p-4 rounded-lg`}>
-          <h3 className={`text-sm font-medium ${netProfit >= 0 ? 'text-blue-900' : 'text-orange-900'} mb-1`}>Net Profit</h3>
-          <p className={`text-2xl font-bold ${netProfit >= 0 ? 'text-blue-700' : 'text-orange-700'}`}>
+        <div className={`${netProfit >= 0 ? 'bg-slate-50' : 'bg-slate-50'} p-4 rounded-lg`}>
+          <h3 className={`text-sm font-medium ${netProfit >= 0 ? 'text-slate-900' : 'text-slate-900'} mb-1`}>Net Profit</h3>
+          <p className={`text-2xl font-bold ${netProfit >= 0 ? 'text-slate-700' : 'text-slate-700'}`}>
             ${netProfit.toFixed(2)}
           </p>
         </div>
@@ -1921,7 +1921,7 @@ function FinancialsTab({ farm }: { farm: Farm }) {
           <button
             type="submit"
             disabled={loading}
-            className="mt-4 bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+            className="mt-4 bg-slate-600 hover:bg-slate-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
           >
             {loading ? 'Adding...' : 'Add Record'}
           </button>
@@ -1945,14 +1945,14 @@ function FinancialsTab({ farm }: { farm: Farm }) {
                 <td className="border p-2">{new Date(record.date).toLocaleDateString()}</td>
                 <td className="border p-2">
                   <span className={`px-2 py-1 rounded text-sm ${
-                    record.type === 'income' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                    record.type === 'income' ? 'bg-slate-100 text-slate-800' : 'bg-slate-100 text-slate-800'
                   }`}>
                     {record.type}
                   </span>
                 </td>
                 <td className="border p-2">{record.category}</td>
                 <td className={`border p-2 text-right font-semibold ${
-                  record.type === 'income' ? 'text-green-700' : 'text-red-700'
+                  record.type === 'income' ? 'text-slate-700' : 'text-slate-700'
                 }`}>
                   ${record.amount.toFixed(2)}
                 </td>
@@ -1968,3 +1968,5 @@ function FinancialsTab({ farm }: { farm: Farm }) {
     </div>
   );
 }
+
+
