@@ -594,9 +594,9 @@ function OverviewTab({ farm }: { farm: Farm }) {
               </div>
             </div>
             <p className="mb-1 text-sm font-medium text-slate-600">Today's Production</p>
-            <p className="mb-2 text-4xl font-bold text-slate-900">{analytics.todayEggs} <span className="text-lg text-slate-600">({Math.floor(analytics.todayEggs / 30)} crates)</span></p>
+            <p className="mb-2 text-4xl font-bold text-slate-900">{Math.floor(analytics.todayEggs / 30)} <span className="text-lg text-slate-600">crates ({analytics.todayEggs} eggs)</span></p>
             <div className="flex items-center gap-2 text-sm text-slate-600">
-              <span>This week: {analytics.weekEggs} ({Math.floor(analytics.weekEggs / 30)} crates)</span>
+              <span>This week: {Math.floor(analytics.weekEggs / 30)} crates ({analytics.weekEggs} eggs)</span>
             </div>
           </div>
         </div>
@@ -651,7 +651,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-slate-900 font-medium">Today</span>
-                <span className="font-bold text-slate-900">{analytics.todayEggs} eggs ({Math.floor(analytics.todayEggs / 30)} crates)</span>
+                <span className="font-bold text-slate-900">{Math.floor(analytics.todayEggs / 30)} crates <span className="text-slate-600 font-normal">({analytics.todayEggs} eggs)</span></span>
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
                 <div 
@@ -665,7 +665,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-slate-900 font-medium">This Week</span>
-                <span className="font-bold text-slate-900">{analytics.weekEggs} eggs ({Math.floor(analytics.weekEggs / 30)} crates)</span>
+                <span className="font-bold text-slate-900">{Math.floor(analytics.weekEggs / 30)} crates <span className="text-slate-600 font-normal">({analytics.weekEggs} eggs)</span></span>
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
                 <div 
@@ -679,7 +679,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div>
               <div className="flex justify-between mb-2">
                 <span className="text-slate-900 font-medium">This Month</span>
-                <span className="font-bold text-slate-900">{analytics.monthEggs} eggs ({Math.floor(analytics.monthEggs / 30)} crates)</span>
+                <span className="font-bold text-slate-900">{Math.floor(analytics.monthEggs / 30)} crates <span className="text-slate-600 font-normal">({analytics.monthEggs} eggs)</span></span>
               </div>
               <div className="bg-slate-100 rounded-full h-4 overflow-hidden">
                 <div className="flex h-full w-full items-center justify-end rounded-full bg-slate-700 px-2 transition-all duration-500">
@@ -982,6 +982,9 @@ function EggProductionTab({ farm }: { farm: Farm }) {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
+      const crateCount = parseInt(formData.quantity);
+      const totalEggs = crateCount * 30; // Convert crates to eggs
+      
       const response = await fetch('/api/farm/egg-production', {
         method: 'POST',
         headers: {
@@ -991,7 +994,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
         body: JSON.stringify({
           coopId: formData.coopId,
           date: formData.date,
-          quantity: parseInt(formData.quantity),
+          quantity: totalEggs,
           grade: formData.grade || undefined,
           notes: formData.notes || undefined,
         }),
@@ -1056,14 +1059,22 @@ function EggProductionTab({ farm }: { farm: Farm }) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-900 mb-1">Quantity (eggs) - 30 per crate</label>
-              <input
-                type="number"
-                value={formData.quantity}
-                onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-                className="w-full px-3 py-2 border rounded-lg"
-                required
-              />
+              <label className="block text-sm font-medium text-slate-900 mb-1">Number of Crates (30 eggs per crate)</label>
+              <div className="relative">
+                <input
+                  type="number"
+                  value={formData.quantity}
+                  onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
+                  className="w-full px-3 py-2 border rounded-lg"
+                  placeholder="e.g., 27"
+                  required
+                />
+                {formData.quantity && (
+                  <div className="mt-2 p-2 bg-emerald-50 border border-emerald-200 rounded-lg text-sm font-semibold text-emerald-700">
+                    Total: {formData.quantity} crates = <span className="text-emerald-900">{parseInt(formData.quantity || '0') * 30} eggs</span>
+                  </div>
+                )}
+              </div>
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-900 mb-1">Grade (optional)</label>
@@ -1105,7 +1116,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
             <tr className="bg-gray-100">
               <th className="border p-2 text-left">Date</th>
               <th className="border p-2 text-left">Coop</th>
-              <th className="border p-2 text-right">Quantity</th>
+              <th className="border p-2 text-right">Production</th>
               <th className="border p-2 text-left">Grade</th>
               <th className="border p-2 text-left">Notes</th>
             </tr>
@@ -1115,7 +1126,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
               <tr key={record.id}>
                 <td className="border p-2">{new Date(record.date).toLocaleDateString()}</td>
                 <td className="border p-2">{record.coop.name}</td>
-                <td className="border p-2 text-right font-semibold">{record.quantity} <span className="text-slate-600 font-normal">({Math.floor(record.quantity / 30)} crates)</span></td>
+                <td className="border p-2 text-right font-semibold">{Math.floor(record.quantity / 30)} crates <span className="text-slate-600 font-normal">({record.quantity} eggs)</span></td>
                 <td className="border p-2">{record.grade || '-'}</td>
                 <td className="border p-2">{record.notes || '-'}</td>
               </tr>
