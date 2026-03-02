@@ -611,9 +611,9 @@ function OverviewTab({ farm }: { farm: Farm }) {
               </div>
             </div>
             <p className="mb-1 text-sm font-medium text-slate-600">Net Profit</p>
-            <p className="mb-2 text-4xl font-bold text-slate-900">${analytics.netProfit.toFixed(2)}</p>
+            <p className="mb-2 text-4xl font-bold text-slate-900">KES {analytics.netProfit.toFixed(2)}</p>
             <div className="flex items-center gap-2 text-sm text-slate-600">
-              <span>Income: ${analytics.totalIncome.toFixed(2)}</span>
+              <span>Income: KES {analytics.totalIncome.toFixed(2)}</span>
             </div>
           </div>
         </div>
@@ -709,7 +709,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div className="flex items-center justify-between p-4 bg-white from-slate-50 to-slate-50 rounded-xl border border-slate-200">
               <div>
                 <p className="text-sm font-medium text-slate-900 mb-1">Total Income</p>
-                <p className="text-2xl font-bold text-slate-600">${analytics.totalIncome.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-slate-600">KES {analytics.totalIncome.toFixed(2)}</p>
               </div>
               <div className="p-3 bg-slate-100 rounded-xl">
                 <TrendUpIcon size={24} className="text-slate-600" />
@@ -718,7 +718,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
             <div className="flex items-center justify-between p-4 bg-white from-slate-50 to-slate-50 rounded-xl border border-slate-200">
               <div>
                 <p className="text-sm font-medium text-slate-900 mb-1">Total Expenses</p>
-                <p className="text-2xl font-bold text-slate-600">${analytics.totalExpenses.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-slate-600">KES {analytics.totalExpenses.toFixed(2)}</p>
               </div>
               <div className="p-3 bg-slate-100 rounded-xl">
                 <FinanceIcon size={24} className="text-slate-600" />
@@ -728,7 +728,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
               <div>
                 <p className="text-sm font-semibold text-slate-900 mb-1">Net Profit</p>
                 <p className={`text-3xl font-bold ${analytics.netProfit >= 0 ? 'text-slate-600' : 'text-slate-600'}`}>
-                  ${analytics.netProfit.toFixed(2)}
+                  KES {analytics.netProfit.toFixed(2)}
                 </p>
               </div>
               <div className={`p-3 rounded-xl ${analytics.netProfit >= 0 ? 'bg-slate-100' : 'bg-slate-100'}`}>
@@ -1544,7 +1544,7 @@ function FeedTab({ farm }: { farm: Farm }) {
                 <td className="border p-2">{record.coop.name}</td>
                 <td className="border p-2">{record.feedType}</td>
                 <td className="border p-2 text-right">{record.quantity}</td>
-                <td className="border p-2 text-right">{record.cost ? `$${record.cost.toFixed(2)}` : '-'}</td>
+                <td className="border p-2 text-right">{record.cost ? `KES ${record.cost.toFixed(2)}` : '-'}</td>
                 <td className="border p-2">{record.supplier || '-'}</td>
               </tr>
             ))}
@@ -1747,7 +1747,7 @@ function MedicationsTab({ farm }: { farm: Farm }) {
                 </td>
                 <td className="border p-2">{record.name}</td>
                 <td className="border p-2">{record.dosage || '-'}</td>
-                <td className="border p-2 text-right">{record.cost ? `$${record.cost.toFixed(2)}` : '-'}</td>
+                <td className="border p-2 text-right">{record.cost ? `KES ${record.cost.toFixed(2)}` : '-'}</td>
                 <td className="border p-2">{record.notes || '-'}</td>
               </tr>
             ))}
@@ -1848,16 +1848,16 @@ function FinancialsTab({ farm }: { farm: Farm }) {
       <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="bg-slate-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-slate-900 mb-1">Total Income</h3>
-          <p className="text-2xl font-bold text-slate-700">${totalIncome.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-slate-700">KES {totalIncome.toFixed(2)}</p>
         </div>
         <div className="bg-slate-50 p-4 rounded-lg">
           <h3 className="text-sm font-medium text-slate-900 mb-1">Total Expenses</h3>
-          <p className="text-2xl font-bold text-slate-700">${totalExpense.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-slate-700">KES {totalExpense.toFixed(2)}</p>
         </div>
         <div className={`${netProfit >= 0 ? 'bg-slate-50' : 'bg-slate-50'} p-4 rounded-lg`}>
           <h3 className={`text-sm font-medium ${netProfit >= 0 ? 'text-slate-900' : 'text-slate-900'} mb-1`}>Net Profit</h3>
           <p className={`text-2xl font-bold ${netProfit >= 0 ? 'text-slate-700' : 'text-slate-700'}`}>
-            ${netProfit.toFixed(2)}
+            KES {netProfit.toFixed(2)}
           </p>
         </div>
       </div>
@@ -1957,7 +1957,7 @@ function FinancialsTab({ farm }: { farm: Farm }) {
                 <td className={`border p-2 text-right font-semibold ${
                   record.type === 'income' ? 'text-slate-700' : 'text-slate-700'
                 }`}>
-                  ${record.amount.toFixed(2)}
+                  KES {record.amount.toFixed(2)}
                 </td>
                 <td className="border p-2">{record.description || '-'}</td>
               </tr>
