@@ -176,23 +176,23 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-emerald-50 pb-24 sm:pb-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 pb-24 sm:pb-8">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 shadow-md backdrop-blur">
-        <div className="mx-auto max-w-7xl px-3 py-3 sm:px-6 sm:py-4 lg:px-8">
+      <header className="sticky top-0 z-30 border-b border-emerald-500/20 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 shadow-2xl backdrop-blur-xl">
+        <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
           <div className="flex items-center justify-between gap-3 sm:gap-4">
             {/* Logo and Title */}
-            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
-              <div className="shrink-0 p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg shadow-lg sm:p-3">
+            <div className="flex min-w-0 items-center gap-2 sm:gap-4">
+              <div className="shrink-0 p-2.5 bg-gradient-to-br from-emerald-400 via-teal-500 to-cyan-600 rounded-xl shadow-2xl sm:p-3.5 hover:shadow-emerald-500/50 transition-all duration-300">
                 <CoopIcon className="text-white" size={24} />
               </div>
               <div className="min-w-0">
-                <h1 className="truncate text-lg font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent sm:text-2xl">
-                  Poultry Farm
+                <h1 className="truncate text-xl font-bold bg-gradient-to-r from-emerald-300 via-teal-300 to-cyan-300 bg-clip-text text-transparent sm:text-3xl font-extrabold">
+                  Poultry Farm Manager
                 </h1>
                 {farm && (
-                  <p className="truncate text-xs text-black sm:text-sm font-medium">
-                    {farm.name}
+                  <p className="truncate text-xs text-emerald-200 sm:text-sm font-semibold">
+                    🚜 {farm.name}
                   </p>
                 )}
               </div>
@@ -200,23 +200,23 @@ export default function Dashboard() {
             
             {/* User Welcome Section */}
             <div className="text-right">
-              <p className="text-xs text-slate-600 sm:text-sm">Welcome back</p>
-              <p className="text-sm font-semibold text-black sm:text-base truncate">{user?.name}</p>
+              <p className="text-xs text-emerald-300/70 sm:text-sm uppercase tracking-wide font-medium">Welcome back</p>
+              <p className="text-sm font-bold text-emerald-100 sm:text-base truncate">{user?.name}</p>
             </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-8 lg:px-8">
+      <main className="mx-auto max-w-7xl px-3 py-6 sm:px-6 sm:py-10 lg:px-8">
         {!farm ? (
-          <div className="bg-white border border-slate-200 p-5 sm:p-8 rounded-xl shadow-lg">
-            <p className="text-black">Loading farm information...</p>
+          <div className="bg-gradient-to-br from-white to-slate-50 border border-slate-200/50 p-6 sm:p-10 rounded-2xl shadow-2xl">
+            <p className="text-slate-900 text-center text-lg font-semibold">Loading farm information...</p>
           </div>
         ) : (
           <div>
             {/* Tab Content */}
-            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-xl sm:p-6 sm:rounded-3xl lg:p-8">
+            <div className="rounded-2xl border border-slate-200/50 bg-gradient-to-br from-white via-slate-50 to-emerald-50/30 p-4 shadow-2xl sm:p-8 sm:rounded-3xl lg:p-10 backdrop-blur-sm">
               {activeTab === 'overview' && <OverviewTab farm={farm} />}
               {activeTab === 'profile' && <ProfileTab user={user} onLogout={handleLogout} />}
               {activeTab === 'coops' && <CoopsTab farm={farm} />}
@@ -231,7 +231,7 @@ export default function Dashboard() {
       </main>
 
       {/* Floating Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur shadow-2xl sm:hidden">
+      <nav className="fixed bottom-0 left-0 right-0 z-20 border-t border-emerald-500/30 bg-gradient-to-r from-slate-900/98 via-blue-900/98 to-emerald-900/98 backdrop-blur-xl shadow-2xl sm:hidden">
         <div className="mx-auto flex max-w-7xl justify-around gap-1 px-1 py-2">
           {[
             { id: 'overview', label: 'Overview', Icon: OverviewIcon },
@@ -246,14 +246,14 @@ export default function Dashboard() {
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`flex flex-col items-center gap-1 px-2 py-2 text-xs font-semibold rounded-xl transition-all duration-200 ${
+              className={`flex flex-col items-center gap-1 px-2 py-2 text-xs font-bold rounded-xl transition-all duration-300 ${
                 activeTab === id
-                  ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/30'
-                  : 'text-slate-600 hover:text-black hover:bg-slate-50'
+                  ? 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white shadow-xl shadow-emerald-500/50'
+                  : 'text-emerald-300/60 hover:text-emerald-200 hover:bg-emerald-900/40'
               }`}
               title={label}
             >
-              <Icon size={20} className={activeTab === id ? 'text-white' : 'text-slate-600'} />
+              <Icon size={20} className={activeTab === id ? 'text-white' : 'text-emerald-300/60'} />
               <span className="text-[10px]">{label}</span>
             </button>
           ))}
@@ -261,7 +261,7 @@ export default function Dashboard() {
       </nav>
 
       {/* Desktop Top Navigation */}
-      <div className="hidden sm:block fixed top-16 left-0 right-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur shadow-md">
+      <div className="hidden sm:block fixed top-16 left-0 right-0 z-20 border-b border-emerald-500/30 bg-gradient-to-r from-slate-900/98 via-blue-900/98 to-emerald-900/98 backdrop-blur-xl shadow-xl">
         <div className="mx-auto max-w-7xl px-3 py-3 sm:px-6 lg:px-8">
           <div className="flex gap-2 overflow-x-auto pb-2 -mb-2">
             {[
@@ -277,13 +277,13 @@ export default function Dashboard() {
               <button
                 key={id}
                 onClick={() => setActiveTab(id)}
-                className={`flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-semibold whitespace-nowrap rounded-lg transition-all duration-200 ${
+                className={`flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-bold whitespace-nowrap rounded-lg transition-all duration-300 ${
                   activeTab === id
-                    ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/30'
-                    : 'bg-slate-50 text-black hover:bg-white shadow-sm border border-slate-200'
+                    ? 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white shadow-xl shadow-emerald-500/50'
+                    : 'text-emerald-300/60 hover:text-emerald-200 hover:bg-emerald-900/40 border border-emerald-500/20'
                 }`}
               >
-                <Icon size={20} className={activeTab === id ? 'text-white' : 'text-black'} />
+                <Icon size={20} className={activeTab === id ? 'text-white' : 'text-emerald-300/60'} />
                 <span>{label}</span>
               </button>
             ))}
@@ -349,32 +349,42 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
     }
   };
 
-  if (!user) return <p className="text-black">Loading user information...</p>;
+  if (!user) return <p className="text-slate-900 text-lg font-semibold">Loading user information...</p>;
   
   return (
     <div>
-      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-slate-900">Profile & Farm Details</h2>
+      <h2 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">Profile & Farm Settings</h2>
       
       {/* User Information */}
-      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg border border-emerald-200 p-4 sm:p-6 mb-4 sm:mb-6">
-        <h3 className="font-semibold text-base sm:text-lg mb-4 text-slate-900">User Information</h3>
-        <div className="space-y-3">
-          <div>
-            <label className="text-xs sm:text-sm font-medium text-slate-700">Name</label>
-            <p className="text-base sm:text-lg font-semibold text-slate-900">{user.name}</p>
+      <div className="bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50 rounded-2xl border border-emerald-200/50 shadow-lg p-6 sm:p-8 mb-6 sm:mb-8 hover:shadow-xl transition-all duration-300 hover:border-emerald-300/70">
+        <div className="flex items-center gap-4 mb-6">
+          <div className="p-3 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-xl shadow-lg">
+            <ProfileIcon className="text-white" size={24} />
           </div>
-          <div>
-            <label className="text-xs sm:text-sm font-medium text-slate-700">Email</label>
-            <p className="text-base sm:text-lg font-semibold text-slate-900 break-all">{user.email}</p>
+          <h3 className="font-bold text-xl text-slate-900">User Information</h3>
+        </div>
+        <div className="space-y-4">
+          <div className="bg-white/60 backdrop-blur rounded-lg p-4 border border-emerald-100/50">
+            <label className="text-xs sm:text-sm font-bold text-emerald-700 uppercase tracking-wide">Full Name</label>
+            <p className="text-lg sm:text-xl font-bold text-slate-900 mt-1">{user.name}</p>
+          </div>
+          <div className="bg-white/60 backdrop-blur rounded-lg p-4 border border-emerald-100/50">
+            <label className="text-xs sm:text-sm font-bold text-emerald-700 uppercase tracking-wide">Email Address</label>
+            <p className="text-lg sm:text-xl font-bold text-slate-900 break-all mt-1">{user.email}</p>
           </div>
         </div>
       </div>
 
       {/* Farm Information */}
       {farm && (
-        <div className="bg-white border border-slate-200 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4">
-            <h3 className="font-semibold text-base sm:text-lg text-slate-900">Farm Details</h3>
+        <div className="bg-gradient-to-br from-blue-50 via-cyan-50 to-teal-50 rounded-2xl border border-blue-200/50 shadow-lg p-6 sm:p-8 mb-6 sm:mb-8 hover:shadow-xl transition-all duration-300 hover:border-blue-300/70">
+          <div className="flex items-center justify-between gap-4 mb-6">
+            <div className="flex items-center gap-4">
+              <div className="p-3 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-xl shadow-lg">
+                <CoopIcon className="text-white" size={24} />
+              </div>
+              <h3 className="font-bold text-xl text-slate-900">Farm Details</h3>
+            </div>
             <button
               onClick={() => {
                 setIsEditing(!isEditing);
@@ -382,76 +392,83 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
                   setFormData({ name: farm.name, location: farm.location });
                 }
               }}
-              className="text-emerald-600 hover:text-emerald-700 font-medium text-sm sm:text-base transition-colors"
+              className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 text-sm"
             >
-              {isEditing ? 'Cancel' : 'Edit'}
+              {isEditing ? 'Cancel' : '✎ Edit'}
             </button>
           </div>
 
           {isEditing ? (
-            <form onSubmit={handleUpdateFarm} className="space-y-4">
+            <form onSubmit={handleUpdateFarm} className="space-y-5">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-1">
-                  Farm Name
+                <label className="block text-sm font-bold text-slate-900 mb-2 uppercase tracking-wide">
+                  🚜 Farm Name
                 </label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-slate-900"
+                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-900 font-semibold background transition-all duration-200"
                   required
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-1">
-                  Location
+                <label className="block text-sm font-bold text-slate-900 mb-2 uppercase tracking-wide">
+                  📍 Location
                 </label>
                 <input
                   type="text"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-slate-900"
+                  className="w-full px-4 py-3 border-2 border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 text-slate-900 font-semibold transition-all duration-200"
                   required
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50"
+                className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-3 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-200 disabled:opacity-50 uppercase tracking-wide"
               >
-                {loading ? 'Saving...' : 'Save Changes'}
+                {loading ? 'Saving...' : '✓ Save Changes'}
               </button>
             </form>
           ) : (
-            <div className="space-y-3">
-              <div>
-                <label className="text-xs sm:text-sm font-medium text-slate-700">Farm Name</label>
-                <p className="text-base sm:text-lg font-semibold text-slate-900">{farm.name}</p>
+            <div className="space-y-4">
+              <div className="bg-white/60 backdrop-blur rounded-lg p-4 border border-blue-100/50">
+                <label className="text-xs sm:text-sm font-bold text-blue-700 uppercase tracking-wide">🚜 Farm Name</label>
+                <p className="text-lg sm:text-xl font-bold text-slate-900 mt-1">{farm.name}</p>
               </div>
-              <div>
-                <label className="text-xs sm:text-sm font-medium text-slate-700">Location</label>
-                <p className="text-base sm:text-lg font-semibold text-slate-900">{farm.location}</p>
+              <div className="bg-white/60 backdrop-blur rounded-lg p-4 border border-blue-100/50">
+                <label className="text-xs sm:text-sm font-bold text-blue-700 uppercase tracking-wide">📍 Location</label>
+                <p className="text-lg sm:text-xl font-bold text-slate-900 mt-1">{farm.location}</p>
               </div>
             </div>
           )}
         </div>
       )}
 
-      {/* Security Info */}
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4 sm:mb-6">
-        <p className="text-xs sm:text-sm text-blue-900">
-          <strong>Note:</strong> This is a single-user application designed for your farm management. Your login credentials provide secure access to all your farm records and data.
-        </p>
+      {/* Security Section */}
+      <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl border border-amber-200/50 shadow-lg p-6 mb-6 sm:mb-8">
+        <div className="flex gap-3">
+          <div className="p-2 bg-amber-400 rounded-lg h-fit">
+            <AlertIcon className="text-white" size={20} />
+          </div>
+          <div>
+            <p className="text-sm sm:text-base text-amber-900 font-semibold">
+              <strong>Security Note:</strong> This application is designed for single-user farm management. Your login provides complete access to all farm records. Keep your credentials secure.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Logout Section */}
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col gap-4">
         <button
           onClick={onLogout}
-          className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-3 rounded-lg font-medium shadow-lg transition-all duration-200 hover:shadow-xl"
+          className="flex items-center justify-center gap-3 w-full bg-gradient-to-r from-red-500 via-red-600 to-rose-600 hover:from-red-600 hover:via-red-700 hover:to-rose-700 text-white px-6 py-4 rounded-xl font-bold shadow-lg hover:shadow-xl transition-all duration-200 uppercase tracking-wide text-lg"
         >
-          <LogoutIcon size={20} />
-          <span>Logout</span>
+          <LogoutIcon size={22} />
+          <span>Logout from Farm</span>
         </button>
       </div>
     </div>
