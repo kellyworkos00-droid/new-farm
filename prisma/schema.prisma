@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+// User model for authentication
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  farm      Farm?
+}
+
+// Farm model
+model Farm {
+  id        String   @id @default(cuid())
+  name      String
+  location  String
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  coops     Coop[]
+  eggProduction EggProduction[]
+  healthRecords HealthRecord[]
+  feedRecords   FeedRecord[]
+  medications   Medication[]
+  financialRecords FinancialRecord[]
+}
+
+// Coop/House model
+model Coop {
+  id        String   @id @default(cuid())
+  name      String
+  capacity  Int
+  farmId    String
+  farm      Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  birds     Bird[]
+  eggProduction EggProduction[]
+  healthRecords HealthRecord[]
+  feedRecords   FeedRecord[]
+}
+
+// Bird model (can track batches or individual birds)
+model Bird {
+  id        String   @id @default(cuid())
+  name      String
+  batchId   String?
+  breed     String
+  coopId    String
+  coop      Coop     @relation(fields: [coopId], references: [id], onDelete: Cascade)
+  quantity  Int      @default(1)
+  dateAdded DateTime @default(now())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Daily egg production
+model EggProduction {
+  id        String   @id @default(cuid())
+  farmId    String
+  farm      Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  coopId    String
+  coop      Coop     @relation(fields: [coopId], references: [id], onDelete: Cascade)
+  date      DateTime
+  quantity  Int
+  grade     String?  // Large, Medium, Small, etc.
+  notes     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Health records (mortality, illness, vaccination)
+model HealthRecord {
+  id        String   @id @default(cuid())
+  farmId    String
+  farm      Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  coopId    String
+  coop      Coop     @relation(fields: [coopId], references: [id], onDelete: Cascade)
+  date      DateTime
+  type      String   // "mortality", "illness", "vaccination", "treatment"
+  description String
+  quantity  Int      @default(1) // number of birds affected
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Feed records
+model FeedRecord {
+  id        String   @id @default(cuid())
+  farmId    String
+  farm      Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  coopId    String
+  coop      Coop     @relation(fields: [coopId], references: [id], onDelete: Cascade)
+  date      DateTime
+  feedType  String   // "layer pellets", "grains", etc.
+  quantity  Float    // in kg or lbs
+  cost      Float?
+  supplier  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Medication and vaccination records
+model Medication {
+  id        String   @id @default(cuid())
+  farmId    String
+  farm      Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  date      DateTime
+  name      String
+  type      String   // "vaccination", "medicine", "supplement"
+  dosage    String?
+  coopsAffected String? // comma-separated coop IDs
+  notes     String?
+  cost      Float?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Financial records
+model FinancialRecord {
+  id        String   @id @default(cuid())
+  farmId    String
+  farm      Farm     @relation(fields: [farmId], references: [id], onDelete: Cascade)
+  date      DateTime
+  type      String   // "income", "expense"
+  category  String   // "egg sales", "feed", "medicine", "labor", etc.
+  amount    Float
+  description String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
