@@ -179,39 +179,30 @@ export default function Dashboard() {
     <div className="min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-emerald-50">
       {/* Header */}
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 shadow-md backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-start justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
-          <div className="flex min-w-0 items-center gap-3 sm:gap-4">
-            <div className="p-3 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-lg">
-              <CoopIcon className="text-white" size={32} />
+        <div className="mx-auto max-w-7xl px-3 py-3 sm:px-6 sm:py-4 lg:px-8">
+          <div className="flex items-center justify-between gap-3 sm:gap-4">
+            {/* Logo and Title */}
+            <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+              <div className="shrink-0 p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-lg shadow-lg sm:p-3">
+                <CoopIcon className="text-white" size={24} />
+              </div>
+              <div className="min-w-0">
+                <h1 className="truncate text-lg font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent sm:text-2xl">
+                  Poultry Farm
+                </h1>
+                {farm && (
+                  <p className="truncate text-xs text-black sm:text-sm font-medium">
+                    {farm.name}
+                  </p>
+                )}
+              </div>
             </div>
-            <div className="min-w-0">
-              <h1 className="truncate text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent sm:text-2xl lg:text-3xl">
-                Poultry Farm Manager
-              </h1>
-              {farm && (
-                <div className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-black sm:text-base">
-                  <span className="font-semibold">{farm.name}</span>
-                  <span className="text-black">•</span>
-                  <div className="flex items-center gap-1">
-                    <LocationIcon size={16} className="text-black" />
-                    <span>{farm.location}</span>
-                  </div>
-                </div>
-              )}
+            
+            {/* User Welcome Section */}
+            <div className="text-right">
+              <p className="text-xs text-slate-600 sm:text-sm">Welcome back</p>
+              <p className="text-sm font-semibold text-black sm:text-base truncate">{user?.name}</p>
             </div>
-          </div>
-          <div className="flex w-full flex-col-reverse items-stretch gap-2 sm:w-auto sm:flex-row sm:items-center sm:gap-4">
-            <div className="text-left sm:mr-2 sm:text-right">
-              <p className="text-sm text-black">Welcome back</p>
-              <p className="font-semibold text-black">{user?.name}</p>
-            </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center justify-center gap-2 bg-gradient-to-r from-red-500 to-red-600 px-4 py-2.5 text-white rounded-xl font-medium shadow-lg transition-all duration-200 hover:from-red-600 hover:to-red-700 hover:shadow-xl sm:px-5"
-            >
-              <LogoutIcon size={18} />
-              <span>Logout</span>
-            </button>
           </div>
         </div>
       </header>
@@ -225,36 +216,36 @@ export default function Dashboard() {
         ) : (
           <div>
             {/* Navigation Tabs */}
-            <div className="-mx-1 mb-5 flex snap-x snap-mandatory gap-2 overflow-x-auto px-1 pb-2 sm:mb-6">
+            <div className="-mx-1 mb-5 flex snap-x snap-mandatory gap-1 overflow-x-auto px-1 pb-2 sm:mb-6 sm:gap-2">
               {[
                 { id: 'overview', label: 'Overview', Icon: OverviewIcon },
                 { id: 'profile', label: 'Profile', Icon: ProfileIcon },
                 { id: 'coops', label: 'Coops', Icon: CoopIcon },
-                { id: 'egg-production', label: 'Egg Production', Icon: EggIcon },
-                { id: 'health', label: 'Health Records', Icon: HealthIcon },
-                { id: 'feed', label: 'Feed Management', Icon: FeedIcon },
-                { id: 'medications', label: 'Medications', Icon: MedicationIcon },
-                { id: 'financials', label: 'Financial Records', Icon: FinanceIcon },
+                { id: 'egg-production', label: 'Eggs', Icon: EggIcon },
+                { id: 'health', label: 'Health', Icon: HealthIcon },
+                { id: 'feed', label: 'Feed', Icon: FeedIcon },
+                { id: 'medications', label: 'Meds', Icon: MedicationIcon },
+                { id: 'financials', label: 'Finance', Icon: FinanceIcon },
               ].map(({ id, label, Icon }) => (
                 <button
                   key={id}
                   onClick={() => setActiveTab(id)}
-                  className={`flex shrink-0 snap-start items-center gap-2 px-3 py-2.5 text-sm font-semibold whitespace-nowrap rounded-xl transition-all duration-200 sm:px-5 sm:py-3 sm:text-base ${
+                  className={`flex shrink-0 snap-start items-center gap-1 px-2.5 py-2 text-xs font-semibold whitespace-nowrap rounded-lg transition-all duration-200 sm:gap-2 sm:px-4 sm:py-2.5 sm:text-sm ${
                     activeTab === id
                       ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/30'
                       : 'bg-white text-black hover:text-black hover:bg-slate-50 shadow-sm border border-slate-200'
                   }`}
                 >
-                  <Icon size={20} className={activeTab === id ? 'text-white' : 'text-black'} />
-                  <span>{label}</span>
+                  <Icon size={18} className={activeTab === id ? 'text-white' : 'text-black'} />
+                  <span className="hidden sm:inline">{label}</span>
                 </button>
               ))}
             </div>
 
             {/* Tab Content */}
-            <div className="rounded-3xl border border-slate-200 bg-white p-4 shadow-xl sm:p-6 lg:p-8">
+            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-xl sm:p-6 sm:rounded-3xl lg:p-8">
               {activeTab === 'overview' && <OverviewTab farm={farm} />}
-              {activeTab === 'profile' && <ProfileTab user={user} />}
+              {activeTab === 'profile' && <ProfileTab user={user} onLogout={handleLogout} />}
               {activeTab === 'coops' && <CoopsTab farm={farm} />}
               {activeTab === 'egg-production' && <EggProductionTab farm={farm} />}
               {activeTab === 'health' && <HealthTab farm={farm} />}
@@ -270,7 +261,7 @@ export default function Dashboard() {
 }
 
 // Simple tab components
-function ProfileTab({ user }: { user: User | null }) {
+function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => void }) {
   const [farm, setFarm] = useState<Farm | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -321,32 +312,32 @@ function ProfileTab({ user }: { user: User | null }) {
     }
   };
 
-  if (!user) return <p>Loading user information...</p>;
+  if (!user) return <p className="text-black">Loading user information...</p>;
   
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Profile & Farm Details</h2>
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-slate-900">Profile & Farm Details</h2>
       
       {/* User Information */}
-      <div className="bg-gray-50 rounded-lg p-6 mb-6">
-        <h3 className="font-semibold text-lg mb-4">User Information</h3>
+      <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-lg border border-emerald-200 p-4 sm:p-6 mb-4 sm:mb-6">
+        <h3 className="font-semibold text-base sm:text-lg mb-4 text-slate-900">User Information</h3>
         <div className="space-y-3">
           <div>
-            <label className="text-sm font-medium text-slate-900">Name</label>
-            <p className="text-lg font-semibold text-gray-900">{user.name}</p>
+            <label className="text-xs sm:text-sm font-medium text-slate-700">Name</label>
+            <p className="text-base sm:text-lg font-semibold text-slate-900">{user.name}</p>
           </div>
           <div>
-            <label className="text-sm font-medium text-slate-900">Email</label>
-            <p className="text-lg font-semibold text-gray-900">{user.email}</p>
+            <label className="text-xs sm:text-sm font-medium text-slate-700">Email</label>
+            <p className="text-base sm:text-lg font-semibold text-slate-900 break-all">{user.email}</p>
           </div>
         </div>
       </div>
 
       {/* Farm Information */}
       {farm && (
-        <div className="bg-white border rounded-lg p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h3 className="font-semibold text-lg">Farm Details</h3>
+        <div className="bg-white border border-slate-200 rounded-lg p-4 sm:p-6 mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4">
+            <h3 className="font-semibold text-base sm:text-lg text-slate-900">Farm Details</h3>
             <button
               onClick={() => {
                 setIsEditing(!isEditing);
@@ -354,7 +345,7 @@ function ProfileTab({ user }: { user: User | null }) {
                   setFormData({ name: farm.name, location: farm.location });
                 }
               }}
-              className="text-green-600 hover:text-green-700 font-medium"
+              className="text-emerald-600 hover:text-emerald-700 font-medium text-sm sm:text-base transition-colors"
             >
               {isEditing ? 'Cancel' : 'Edit'}
             </button>
@@ -363,33 +354,33 @@ function ProfileTab({ user }: { user: User | null }) {
           {isEditing ? (
             <form onSubmit={handleUpdateFarm} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-1">
                   Farm Name
                 </label>
                 <input
                   type="text"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-slate-900"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-slate-900 mb-1">
                   Location
                 </label>
                 <input
                   type="text"
                   value={formData.location}
                   onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-slate-900"
                   required
                 />
               </div>
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg disabled:opacity-50"
+                className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 disabled:opacity-50"
               >
                 {loading ? 'Saving...' : 'Save Changes'}
               </button>
@@ -397,23 +388,34 @@ function ProfileTab({ user }: { user: User | null }) {
           ) : (
             <div className="space-y-3">
               <div>
-                <label className="text-sm font-medium text-slate-900">Farm Name</label>
-                <p className="text-lg font-semibold text-gray-900">{farm.name}</p>
+                <label className="text-xs sm:text-sm font-medium text-slate-700">Farm Name</label>
+                <p className="text-base sm:text-lg font-semibold text-slate-900">{farm.name}</p>
               </div>
               <div>
-                <label className="text-sm font-medium text-slate-900">Location</label>
-                <p className="text-lg font-semibold text-gray-900">{farm.location}</p>
+                <label className="text-xs sm:text-sm font-medium text-slate-700">Location</label>
+                <p className="text-base sm:text-lg font-semibold text-slate-900">{farm.location}</p>
               </div>
             </div>
           )}
         </div>
       )}
 
-      <div className="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <p className="text-sm text-blue-900">
-          <strong>Note:</strong> This is a single-user application designed for your farm management. 
-          Your login credentials provide secure access to all your farm records and data.
+      {/* Security Info */}
+      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4 sm:mb-6">
+        <p className="text-xs sm:text-sm text-blue-900">
+          <strong>Note:</strong> This is a single-user application designed for your farm management. Your login credentials provide secure access to all your farm records and data.
         </p>
+      </div>
+
+      {/* Logout Section */}
+      <div className="flex flex-col sm:flex-row gap-3">
+        <button
+          onClick={onLogout}
+          className="flex items-center justify-center gap-2 w-full bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white px-4 py-3 rounded-lg font-medium shadow-lg transition-all duration-200 hover:shadow-xl"
+        >
+          <LogoutIcon size={20} />
+          <span>Logout</span>
+        </button>
       </div>
     </div>
   );
