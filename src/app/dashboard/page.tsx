@@ -176,7 +176,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 pb-24 sm:pb-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-emerald-900 pb-28 sm:pt-24 sm:pb-8">
       {/* Header */}
       <header className="sticky top-0 z-30 border-b border-emerald-500/20 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 shadow-2xl backdrop-blur-xl">
         <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
@@ -231,8 +231,8 @@ export default function Dashboard() {
       </main>
 
       {/* Floating Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 z-20 border-t border-emerald-500/30 bg-gradient-to-r from-slate-900/98 via-blue-900/98 to-emerald-900/98 backdrop-blur-xl shadow-2xl sm:hidden">
-        <div className="mx-auto flex max-w-7xl justify-around gap-1 px-1 py-2">
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl shadow-2xl shadow-emerald-900/80 rounded-3xl sm:hidden hover:shadow-emerald-900/100 transition-all duration-300">
+        <div className="flex max-w-md justify-around gap-2 px-4 py-3">
           {[
             { id: 'overview', label: 'Overview', Icon: OverviewIcon },
             { id: 'profile', label: 'Profile', Icon: ProfileIcon },
@@ -246,53 +246,51 @@ export default function Dashboard() {
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`flex flex-col items-center gap-1 px-2 py-2 text-xs font-bold rounded-xl transition-all duration-300 ${
+              className={`flex flex-col items-center gap-1 px-2.5 py-2.5 text-xs font-bold rounded-2xl transition-all duration-300 hover:scale-110 ${
                 activeTab === id
-                  ? 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white shadow-xl shadow-emerald-500/50'
-                  : 'text-emerald-300/60 hover:text-emerald-200 hover:bg-emerald-900/40'
+                  ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60 scale-110'
+                  : 'text-emerald-300/70 hover:text-emerald-200 hover:bg-emerald-900/50'
               }`}
               title={label}
             >
-              <Icon size={20} className={activeTab === id ? 'text-white' : 'text-emerald-300/60'} />
-              <span className="text-[10px]">{label}</span>
+              <Icon size={20} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
+              <span className="text-[9px] font-bold">{label}</span>
             </button>
           ))}
         </div>
       </nav>
 
       {/* Desktop Top Navigation */}
-      <div className="hidden sm:block fixed top-16 left-0 right-0 z-20 border-b border-emerald-500/30 bg-gradient-to-r from-slate-900/98 via-blue-900/98 to-emerald-900/98 backdrop-blur-xl shadow-xl">
-        <div className="mx-auto max-w-7xl px-3 py-3 sm:px-6 lg:px-8">
-          <div className="flex gap-2 overflow-x-auto pb-2 -mb-2">
-            {[
-              { id: 'overview', label: 'Overview', Icon: OverviewIcon },
-              { id: 'profile', label: 'Profile', Icon: ProfileIcon },
-              { id: 'coops', label: 'Coops', Icon: CoopIcon },
-              { id: 'egg-production', label: 'Egg Production', Icon: EggIcon },
-              { id: 'health', label: 'Health Records', Icon: HealthIcon },
-              { id: 'feed', label: 'Feed Management', Icon: FeedIcon },
-              { id: 'medications', label: 'Medications', Icon: MedicationIcon },
-              { id: 'financials', label: 'Financial Records', Icon: FinanceIcon },
-            ].map(({ id, label, Icon }) => (
-              <button
-                key={id}
-                onClick={() => setActiveTab(id)}
-                className={`flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm font-bold whitespace-nowrap rounded-lg transition-all duration-300 ${
-                  activeTab === id
-                    ? 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white shadow-xl shadow-emerald-500/50'
-                    : 'text-emerald-300/60 hover:text-emerald-200 hover:bg-emerald-900/40 border border-emerald-500/20'
-                }`}
-              >
-                <Icon size={20} className={activeTab === id ? 'text-white' : 'text-emerald-300/60'} />
-                <span>{label}</span>
-              </button>
-            ))}
-          </div>
+      <div className="hidden sm:flex fixed top-6 left-1/2 -translate-x-1/2 z-40 border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-emerald-900/80 hover:shadow-emerald-900/100 transition-all duration-300">
+        <div className="flex gap-2 px-4 py-3">
+          {[
+            { id: 'overview', label: 'Overview', Icon: OverviewIcon },
+            { id: 'profile', label: 'Profile', Icon: ProfileIcon },
+            { id: 'coops', label: 'Coops', Icon: CoopIcon },
+            { id: 'egg-production', label: 'Egg Production', Icon: EggIcon },
+            { id: 'health', label: 'Health Records', Icon: HealthIcon },
+            { id: 'feed', label: 'Feed Management', Icon: FeedIcon },
+            { id: 'medications', label: 'Medications', Icon: MedicationIcon },
+            { id: 'financials', label: 'Financial Records', Icon: FinanceIcon },
+          ].map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              onClick={() => setActiveTab(id)}
+              className={`flex items-center gap-2 px-4 py-2.5 text-sm font-bold whitespace-nowrap rounded-xl transition-all duration-300 hover:scale-105 ${
+                activeTab === id
+                  ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60'
+                  : 'text-emerald-300/70 hover:text-emerald-200 hover:bg-emerald-900/50'
+              }`}
+            >
+              <Icon size={20} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
+              <span>{label}</span>
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* Add padding for desktop nav */}
-      <div className="hidden sm:h-20" />
+      {/* Add padding for floating navs */}
+      <div className="h-0" />
     </div>
   );
 }
