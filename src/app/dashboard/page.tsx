@@ -186,47 +186,44 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-white pb-28 sm:pt-32 sm:pb-8">
+    <div className="min-h-screen bg-white pb-28 sm:pt-20 sm:pb-8">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 shadow-lg backdrop-blur-xl">
-        {/* Top accent bar */}
-        <div className="h-1 w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500"></div>
-        
-        <div className="mx-auto max-w-7xl px-3 py-4 sm:px-6 sm:py-6 lg:px-8">
-          <div className="flex items-center justify-between gap-3 sm:gap-4">
-            {/* Logo and Title */}
-            <div className="flex min-w-0 items-center gap-2 sm:gap-4">
-              <div className="shrink-0 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2.5 shadow-lg transition-all duration-300 hover:shadow-xl sm:p-3.5">
-                <CoopIcon className="text-white" size={24} />
+      <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur-xl">
+        <div className="mx-auto max-w-7xl px-4 py-2.5 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between gap-3">
+            {/* Logo and Farm Info */}
+            <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
+              <div className="shrink-0 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 p-2 shadow-sm">
+                <CoopIcon className="text-white" size={20} />
               </div>
-              <div className="min-w-0">
-                <h1 className="truncate text-lg font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent sm:text-3xl">
-                  Poultry Farm Manager
-                </h1>
-                {farm && (
-                  <p className="truncate text-xs font-semibold text-slate-500 sm:text-sm">
-                    📍 {farm.name}
+              {farm && (
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-bold text-slate-900 sm:text-base">
+                    {farm.name}
                   </p>
-                )}
-              </div>
+                  <p className="truncate text-xs text-slate-500">
+                    📍 {farm.location || 'Kenya'}
+                  </p>
+                </div>
+              )}
             </div>
             
-            {/* User Welcome + Profile Action */}
-            <div className="flex flex-col items-end gap-3 text-right">
-              <div className="rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 px-3 py-2 sm:px-4 sm:py-2.5">
-                <p className="text-xs font-medium uppercase tracking-widest text-slate-500 sm:text-xs">Welcome</p>
-                <p className="truncate text-sm font-bold text-slate-900 sm:text-base">{user?.name}</p>
+            {/* User Info + Profile */}
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="hidden sm:block text-right">
+                <p className="text-xs text-slate-500">Welcome</p>
+                <p className="truncate text-sm font-semibold text-slate-900">{user?.name}</p>
               </div>
               <button
                 onClick={() => setActiveTab('profile')}
-                className={`inline-flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-bold transition-all duration-300 sm:text-sm ${
+                className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold transition-all ${
                   activeTab === 'profile'
-                    ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg hover:shadow-xl'
-                    : 'border-2 border-slate-200 bg-white text-slate-700 hover:border-emerald-400 hover:bg-emerald-50'
+                    ? 'bg-slate-900 text-white shadow-sm'
+                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
                 }`}
               >
-                <ProfileIcon size={18} className={activeTab === 'profile' ? 'text-white' : 'text-slate-600'} />
-                <span>Profile</span>
+                <ProfileIcon size={16} className={activeTab === 'profile' ? 'text-white' : 'text-slate-600'} />
+                <span className="hidden sm:inline">Profile</span>
               </button>
             </div>
           </div>
@@ -278,7 +275,7 @@ export default function Dashboard() {
       </nav>
 
       {/* Desktop Top Navigation */}
-      <div className="fixed left-1/2 top-[108px] z-40 hidden w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 rounded-3xl border border-slate-200 bg-white/95 shadow-lg backdrop-blur-2xl transition-all duration-300 sm:flex">
+      <div className="fixed left-1/2 top-[72px] z-40 hidden w-[calc(100%-2rem)] max-w-6xl -translate-x-1/2 rounded-3xl border border-slate-200 bg-white/95 shadow-lg backdrop-blur-2xl transition-all duration-300 sm:flex">
         <div className="flex flex-wrap justify-center gap-2 px-3 py-3 lg:px-6">
           {navItems.map(({ id, label, Icon }) => (
             <button
