@@ -231,8 +231,8 @@ export default function Dashboard() {
       </main>
 
       {/* Floating Bottom Navigation */}
-      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl shadow-2xl shadow-emerald-900/80 rounded-3xl sm:hidden hover:shadow-emerald-900/100 transition-all duration-300">
-        <div className="flex max-w-md justify-around gap-2 px-4 py-3">
+      <nav className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-lg border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl shadow-2xl shadow-emerald-900/80 rounded-3xl sm:hidden hover:shadow-emerald-900/100 transition-all duration-300">
+        <div className="flex flex-wrap justify-center gap-1 px-2 py-3 sm:px-4 sm:py-3">
           {[
             { id: 'overview', label: 'Overview', Icon: OverviewIcon },
             { id: 'profile', label: 'Profile', Icon: ProfileIcon },
@@ -246,43 +246,43 @@ export default function Dashboard() {
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`flex flex-col items-center gap-1 px-2.5 py-2.5 text-xs font-bold rounded-2xl transition-all duration-300 hover:scale-110 ${
+              className={`flex flex-col items-center gap-0.5 px-2 py-2 text-[11px] font-bold rounded-2xl transition-all duration-300 hover:scale-110 ${
                 activeTab === id
                   ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60 scale-110'
                   : 'text-emerald-300/70 hover:text-emerald-200 hover:bg-emerald-900/50'
               }`}
               title={label}
             >
-              <Icon size={20} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
-              <span className="text-[9px] font-bold">{label}</span>
+              <Icon size={18} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
+              <span className="text-[9px] leading-none">{label}</span>
             </button>
           ))}
         </div>
       </nav>
 
       {/* Desktop Top Navigation */}
-      <div className="hidden sm:flex fixed top-6 left-1/2 -translate-x-1/2 z-40 border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-emerald-900/80 hover:shadow-emerald-900/100 transition-all duration-300">
-        <div className="flex gap-2 px-4 py-3">
+      <div className="hidden sm:flex fixed top-6 left-1/2 -translate-x-1/2 z-40 w-[calc(100%-2rem)] max-w-6xl border border-emerald-400/40 bg-gradient-to-r from-slate-900/95 via-blue-900/95 to-emerald-900/95 backdrop-blur-2xl rounded-3xl shadow-2xl shadow-emerald-900/80 hover:shadow-emerald-900/100 transition-all duration-300">
+        <div className="flex flex-wrap justify-center gap-2 px-3 py-3 lg:px-6">
           {[
             { id: 'overview', label: 'Overview', Icon: OverviewIcon },
             { id: 'profile', label: 'Profile', Icon: ProfileIcon },
             { id: 'coops', label: 'Coops', Icon: CoopIcon },
-            { id: 'egg-production', label: 'Egg Production', Icon: EggIcon },
-            { id: 'health', label: 'Health Records', Icon: HealthIcon },
-            { id: 'feed', label: 'Feed Management', Icon: FeedIcon },
-            { id: 'medications', label: 'Medications', Icon: MedicationIcon },
-            { id: 'financials', label: 'Financial Records', Icon: FinanceIcon },
+            { id: 'egg-production', label: 'Egg Prod.', Icon: EggIcon },
+            { id: 'health', label: 'Health', Icon: HealthIcon },
+            { id: 'feed', label: 'Feed Mgmt.', Icon: FeedIcon },
+            { id: 'medications', label: 'Meds', Icon: MedicationIcon },
+            { id: 'financials', label: 'Finance', Icon: FinanceIcon },
           ].map(({ id, label, Icon }) => (
             <button
               key={id}
               onClick={() => setActiveTab(id)}
-              className={`flex items-center gap-2 px-4 py-2.5 text-sm font-bold whitespace-nowrap rounded-xl transition-all duration-300 hover:scale-105 ${
+              className={`flex items-center gap-2 px-3 py-2.5 text-xs lg:text-sm font-bold whitespace-nowrap rounded-xl transition-all duration-300 hover:scale-105 ${
                 activeTab === id
                   ? 'bg-gradient-to-br from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/60'
                   : 'text-emerald-300/70 hover:text-emerald-200 hover:bg-emerald-900/50'
               }`}
             >
-              <Icon size={20} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
+              <Icon size={18} className={activeTab === id ? 'text-white' : 'text-emerald-300/70'} />
               <span>{label}</span>
             </button>
           ))}
