@@ -127,7 +127,13 @@ export default function Dashboard() {
   const [farm, setFarm] = useState<Farm | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('overview');
+  const [toast, setToast] = useState<{message: string, type: 'success' | 'error'} | null>(null);
   const router = useRouter();
+
+  const showToast = (message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 3000);
+  };
 
   const navItems = [
     { id: 'overview', label: 'Overview', mobileLabel: 'Home', Icon: OverviewIcon },
@@ -177,9 +183,10 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <p className="text-slate-900">Loading...</p>
+          <div className="w-16 h-16 border-4 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-slate-600 font-semibold">Loading your farm...</p>
         </div>
       </div>
     );
@@ -240,14 +247,14 @@ export default function Dashboard() {
           <div>
             {/* Tab Content */}
             <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:rounded-3xl sm:p-8 lg:p-10">
-              {activeTab === 'overview' && <OverviewTab farm={farm} />}
-              {activeTab === 'profile' && <ProfileTab user={user} onLogout={handleLogout} />}
-              {activeTab === 'coops' && <CoopsTab farm={farm} />}
-              {activeTab === 'egg-production' && <EggProductionTab farm={farm} />}
-              {activeTab === 'health' && <HealthTab farm={farm} />}
-              {activeTab === 'feed' && <FeedTab farm={farm} />}
-              {activeTab === 'medications' && <MedicationsTab farm={farm} />}
-              {activeTab === 'financials' && <FinancialsTab farm={farm} />}
+              {activeTab === 'overview' && <OverviewTab farm={farm} showToast={showToast} />}
+              {activeTab === 'profile' && <ProfileTab user={user} onLogout={handleLogout} showToast={showToast} />}
+              {activeTab === 'coops' && <CoopsTab farm={farm} showToast={showToast} />}
+              {activeTab === 'egg-production' && <EggProductionTab farm={farm} showToast={showToast} />}
+              {activeTab === 'health' && <HealthTab farm={farm} showToast={showToast} />}
+              {activeTab === 'feed' && <FeedTab farm={farm} showToast={showToast} />}
+              {activeTab === 'medications' && <MedicationsTab farm={farm} showToast={showToast} />}
+              {activeTab === 'financials' && <FinancialsTab farm={farm} showToast={showToast} />}
             </div>
           </div>
         )}
@@ -294,6 +301,24 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Toast Notification */}
+      {toast && (
+        <div className={`fixed top-20 right-4 z-50 px-6 py-4 rounded-xl shadow-2xl border-2 transform transition-all duration-500 ${
+          toast.type === 'success' 
+            ? 'bg-emerald-50 border-emerald-500 text-emerald-900' 
+            : 'bg-red-50 border-red-500 text-red-900'
+        } animate-slide-in`}>
+          <div className="flex items-center gap-3">
+            {toast.type === 'success' ? (
+              <CheckIcon className="text-emerald-600" size={24} />
+            ) : (
+              <AlertIcon className="text-red-600" size={24} />
+            )}
+            <p className="font-semibold">{toast.message}</p>
+          </div>
+        </div>
+      )}
+
       {/* Add padding for floating navs */}
       <div className="h-0" />
     </div>
@@ -301,7 +326,7 @@ export default function Dashboard() {
 }
 
 // Simple tab components
-function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => void }) {
+function ProfileTab({ user, onLogout, showToast }: { user: User | null; onLogout: () => void; showToast: (msg: string, type?: 'success' | 'error') => void }) {
   const [farm, setFarm] = useState<Farm | null>(null);
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -478,7 +503,7 @@ function ProfileTab({ user, onLogout }: { user: User | null; onLogout: () => voi
   );
 }
 
-function OverviewTab({ farm }: { farm: Farm }) {
+function OverviewTab({ farm, showToast }: { farm: Farm; showToast: (msg: string, type?: 'success' | 'error') => void }) {
   const [analytics, setAnalytics] = useState({
     totalCoops: 0,
     totalCapacity: 0,
@@ -551,7 +576,24 @@ function OverviewTab({ farm }: { farm: Farm }) {
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-black">Loading analytics...</div>;
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center gap-3 mb-8">
+          <div className="w-8 h-8 bg-slate-200 rounded-lg animate-pulse"></div>
+          <div className="h-8 w-64 bg-slate-200 rounded-lg animate-pulse"></div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[1,2,3,4].map(i => (
+            <div key={i} className="h-40 bg-slate-100 rounded-2xl animate-pulse"></div>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {[1,2].map(i => (
+            <div key={i} className="h-64 bg-slate-100 rounded-2xl animate-pulse"></div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -564,7 +606,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
       {/* Key Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {/* Active Coops Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md animate-fade-in" style={{ animationDelay: '0ms' }}>
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
           <div className="relative">
             <div className="flex items-center justify-between mb-3">
@@ -582,7 +624,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
         </div>
 
         {/* Today's Eggs Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md animate-fade-in" style={{ animationDelay: '100ms' }}>
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
           <div className="relative">
             <div className="flex items-center justify-between mb-3">
@@ -599,7 +641,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
         </div>
 
         {/* Net Profit Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md animate-fade-in" style={{ animationDelay: '200ms' }}>
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
           <div className="relative">
             <div className="flex items-center justify-between mb-3">
@@ -616,7 +658,7 @@ function OverviewTab({ farm }: { farm: Farm }) {
         </div>
 
         {/* Health Alerts Card */}
-        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+        <div className="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md animate-fade-in" style={{ animationDelay: '300ms' }}>
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-white opacity-10 rounded-full"></div>
           <div className="relative">
             <div className="flex items-center justify-between mb-3">
@@ -779,12 +821,17 @@ function OverviewTab({ farm }: { farm: Farm }) {
   );
 }
 
-function CoopsTab({ farm }: { farm: Farm }) {
+function CoopsTab({ farm, showToast }: { farm: Farm; showToast: (msg: string, type?: 'success' | 'error') => void }) {
   const [coops, setCoops] = useState<Coop[]>([]);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({ name: '', capacity: '' });
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredCoops = coops.filter(coop => 
+    coop.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   useEffect(() => {
     fetchCoops();
@@ -822,10 +869,14 @@ function CoopsTab({ farm }: { farm: Farm }) {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (response.ok) {
+        showToast('Coop deleted successfully', 'success');
         fetchCoops();
+      } else {
+        showToast('Failed to delete coop', 'error');
       }
     } catch (error) {
       console.error('Error deleting coop:', error);
+      showToast('Error deleting coop', 'error');
     } finally {
       setLoading(false);
     }
@@ -851,10 +902,13 @@ function CoopsTab({ farm }: { farm: Farm }) {
           }),
         });
         if (response.ok) {
+          showToast('Coop updated successfully', 'success');
           setFormData({ name: '', capacity: '' });
           setEditingId(null);
           setShowForm(false);
           fetchCoops();
+        } else {
+          showToast('Failed to update coop', 'error');
         }
       } else {
         // Create new coop
@@ -870,9 +924,12 @@ function CoopsTab({ farm }: { farm: Farm }) {
           }),
         });
         if (response.ok) {
+          showToast('Coop created successfully', 'success');
           setFormData({ name: '', capacity: '' });
           setShowForm(false);
           fetchCoops();
+        } else {
+          showToast('Failed to create coop', 'error');
         }
       }
     } catch (error) {
@@ -890,18 +947,30 @@ function CoopsTab({ farm }: { farm: Farm }) {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
         <h2 className="text-2xl font-bold">Coops / Houses</h2>
-        <button
-          onClick={() => {
-            setEditingId(null);
-            setFormData({ name: '', capacity: '' });
-            setShowForm(!showForm);
-          }}
-          className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition-all"
-        >
-          {showForm ? 'Cancel' : '+ Add Coop'}
-        </button>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <div className="relative flex-1 sm:flex-initial">
+            <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <input
+              type="text"
+              placeholder="Search coops..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full sm:w-48 pl-10 pr-4 py-2 border border-slate-300 rounded-lg focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 transition-all"
+            />
+          </div>
+          <button
+            onClick={() => {
+              setEditingId(null);
+              setFormData({ name: '', capacity: '' });
+              setShowForm(!showForm);
+            }}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-semibold transition-all whitespace-nowrap"
+          >
+            {showForm ? 'Cancel' : '+ Add Coop'}
+          </button>
+        </div>
       </div>
 
       {showForm && (
@@ -953,9 +1022,32 @@ function CoopsTab({ farm }: { farm: Farm }) {
         </form>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {coops.map((coop) => (
-          <div key={coop.id} className="group relative bg-white from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 transform hover:-translate-y-1">
+      {filteredCoops.length === 0 ? (
+        <div className="text-center py-16 bg-slate-50 rounded-2xl border-2 border-dashed border-slate-300">
+          <CoopIcon size={48} className="text-slate-300 mx-auto mb-4" />
+          <p className="text-slate-500 font-semibold text-lg mb-2">
+            {searchTerm ? 'No coops found matching your search' : 'No coops added yet'}
+          </p>
+          <p className="text-slate-400 text-sm mb-6">
+            {searchTerm ? 'Try a different search term' : 'Add your first coop to get started'}
+          </p>
+          {!searchTerm && (
+            <button
+              onClick={() => setShowForm(true)}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition-all"
+            >
+              + Add First Coop
+            </button>
+          )}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredCoops.map((coop, index) => (
+            <div 
+              key={coop.id} 
+              className="group relative bg-white from-white to-slate-50 border-2 border-slate-200 rounded-2xl p-6 shadow-lg hover:shadow-2xl hover:border-emerald-300 transition-all duration-300 transform hover:-translate-y-1 animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
             <div className="absolute top-4 right-4 w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center">
               <CoopIcon size={24} className="text-slate-600" />
             </div>
@@ -993,21 +1085,13 @@ function CoopsTab({ farm }: { farm: Farm }) {
             </div>
           </div>
         ))}
-        {coops.length === 0 && (
-          <div className="col-span-full text-center py-16 bg-white from-slate-50 to-slate-50 rounded-2xl border-2 border-dashed border-slate-300">
-            <div className="inline-flex p-4 bg-white rounded-full shadow-lg mb-4">
-              <CoopIcon size={48} className="text-slate-700" />
-            </div>
-            <p className="text-slate-900 text-lg font-medium mb-2">No coops added yet</p>
-            <p className="text-slate-700">Click "Add New Coop" button above to get started</p>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
 
-function EggProductionTab({ farm }: { farm: Farm }) {
+function EggProductionTab({ farm, showToast }: { farm: Farm; showToast: (msg: string, type?: 'success' | 'error') => void }) {
   const [records, setRecords] = useState<EggRecord[]>([]);
   const [coops, setCoops] = useState<Coop[]>([]);
   const [loading, setLoading] = useState(false);
@@ -1081,6 +1165,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
         }),
       });
       if (response.ok) {
+        showToast('Egg production record added successfully', 'success');
         setFormData({
           coopId: '',
           date: new Date().toISOString().split('T')[0],
@@ -1090,9 +1175,12 @@ function EggProductionTab({ farm }: { farm: Farm }) {
         });
         setShowForm(false);
         fetchRecords();
+      } else {
+        showToast('Failed to add egg production record', 'error');
       }
     } catch (error) {
       console.error('Error creating record:', error);
+      showToast('Error adding record', 'error');
     } finally {
       setLoading(false);
     }
@@ -1222,7 +1310,7 @@ function EggProductionTab({ farm }: { farm: Farm }) {
   );
 }
 
-function HealthTab({ farm }: { farm: Farm }) {
+function HealthTab({ farm, showToast }: { farm: Farm; showToast: (msg: string, type?: 'success' | 'error') => void }) {
   const [records, setRecords] = useState<HealthRecord[]>([]);
   const [coops, setCoops] = useState<Coop[]>([]);
   const [loading, setLoading] = useState(false);
@@ -1434,7 +1522,7 @@ function HealthTab({ farm }: { farm: Farm }) {
   );
 }
 
-function FeedTab({ farm }: { farm: Farm }) {
+function FeedTab({ farm, showToast }: { farm: Farm; showToast: (msg: string, type?: 'success' | 'error') => void }) {
   const [records, setRecords] = useState<FeedRecord[]>([]);
   const [coops, setCoops] = useState<Coop[]>([]);
   const [loading, setLoading] = useState(false);
@@ -1650,7 +1738,7 @@ function FeedTab({ farm }: { farm: Farm }) {
   );
 }
 
-function MedicationsTab({ farm }: { farm: Farm }) {
+function MedicationsTab({ farm, showToast }: { farm: Farm; showToast: (msg: string, type?: 'success' | 'error') => void }) {
   const [records, setRecords] = useState<Medication[]>([]);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -1853,7 +1941,7 @@ function MedicationsTab({ farm }: { farm: Farm }) {
   );
 }
 
-function FinancialsTab({ farm }: { farm: Farm }) {
+function FinancialsTab({ farm, showToast }: { farm: Farm; showToast: (msg: string, type?: 'success' | 'error') => void }) {
   const [records, setRecords] = useState<FinancialRecord[]>([]);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
